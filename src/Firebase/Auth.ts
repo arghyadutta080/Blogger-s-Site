@@ -31,8 +31,7 @@ const addUser = async (userInfo: userInfo) => {
 const signIn = () => {
     const provider = new GoogleAuthProvider();
 
-    return new Promise((resolve, reject) => {
-
+    return new Promise((resolve, reject) => {     
         signInWithPopup(auth, provider)                     // signInWithPopup pops up the google account auth window
             .then((result) => {
                 const user = result.user
@@ -69,7 +68,6 @@ const signIn = () => {
 const isAuthenticated = () => {
 
     return new Promise((resolve, reject) => {
-
         try {
             onAuthStateChanged(auth, (user) => {        // onAuthStateChanged function returns the user info 
                 if (user) {                             // and handle the functionality after selecting the google account from auth window
@@ -95,7 +93,6 @@ const isAuthenticated = () => {
 
 const logOut = () => {
     return new Promise((resolve, reject) => {
-
         try {
             const user = auth.currentUser;
             if (user !== null) {

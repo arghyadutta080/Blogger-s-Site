@@ -4,26 +4,28 @@ import "react-quill/dist/quill.snow.css";
 import { ImageResize } from "quill-image-resize-module-ts";
 import BlotFormatter from "quill-blot-formatter";
 
+
 Quill.register("modules/imageResize", ImageResize);
 Quill.register("modules/blotFormatter", BlotFormatter);
 
-const TextEditor: React.FC = () => {
-  const [htmlText, setHtmlText] = useState("");
 
-  var toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // toggled buttons
+const TextEditor: React.FC = () => {
+  const [htmlText, setHtmlText] = useState<string>("");
+
+  var toolbarOptions = [                          // toolbar contains different tool to customize the text, image and video in the editor box
+    ["bold", "italic", "underline", "strike"],  
     ["blockquote", "code-block"],
-    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ header: 1 }, { header: 2 }],             
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
+    [{ script: "sub" }, { script: "super" }],   
+    [{ indent: "-1" }, { indent: "+1" }],       
+    [{ direction: "rtl" }],                     
     ["link", "image", "video"],
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme 
+    [{ color: [] }, { background: [] }],        
     [{ font: [] }],
     [{ align: [] }],
-    ["clean"], // remove formatting button
+    ["clean"],            
   ];
 
   const modules = {
