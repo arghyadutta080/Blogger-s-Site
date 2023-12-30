@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { signIn, logOut, isAuthenticated } from "./Firebase/Auth";
+import { signIn, logOut, isAuthenticated } from "./firebase/Auth";
+import TextEditor from "./components/TextEditor";
 
 
 const App: React.FC = () => {
@@ -39,6 +40,8 @@ const App: React.FC = () => {
       <button onClick={() => logOutUser()} className=" border border-red-600 p-4">
         Logout
       </button>
+
+      <TextEditor/>
     </>
   );
 };
