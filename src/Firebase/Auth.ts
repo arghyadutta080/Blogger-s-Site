@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./Config";
-import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 
 
@@ -12,6 +12,7 @@ const auth = getAuth(app);
 export interface userInfo {
     uid: string | null,
     displayName: string | null,
+    username?: string | null,
     email: string | null,
     photoURL: string | null,
     authState?: boolean
@@ -20,8 +21,13 @@ export interface userInfo {
 
 const addUser = async (userInfo: userInfo) => {
     try {
-        const userRef = collection(db, "users");
-        await setDoc(doc(userRef, userInfo.email || ""), userInfo);
+        const docRef = doc(db, "users", userInfo.email || "")
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            const userRef = collection(db, "users");
+            await setDoc(doc(userRef, userInfo.email || ""), userInfo);
+        }
     } catch (error) {
         console.log(error);
     }
@@ -41,7 +47,7 @@ const signIn = () => {
                     const email = user.email;
                     const photoURL = user.photoURL;
 
-                    const userInfo = { uid, displayName, email, photoURL, authState: true };
+                    const userInfo = { uid, displayName, email, photoURL, username: "" ,authState: true };
 
                     addUser(userInfo)                   // storing `userInfo` in form of a document in "users" collection
 
@@ -71,14 +77,7 @@ const isAuthenticated = () => {
         try {
             onAuthStateChanged(auth, (user) => {        // onAuthStateChanged function returns the user info 
                 if (user) {                             // and handle the functionality after selecting the google account from auth window
-                    const uid = user.uid;
-                    const displayName = user.displayName;
-                    const email = user.email;
-                    const photoURL = user.photoURL;
-
-                    const userInfo: userInfo = { uid, displayName, email, photoURL, authState: true };
-
-                    resolve(userInfo);
+                    resolve({ authState: true });
                 } else {
                     resolve({ authState: false });
                 }
@@ -109,4 +108,4 @@ const logOut = () => {
 }
 
 
-export { signIn, logOut, isAuthenticated };
+export { signIn, logOut, isAuthenticated, app, db, auth };
