@@ -1,9 +1,9 @@
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { app, db, auth, userInfo } from "./Auth";
 
 
 interface updatedFields {
-    uid?: string | null,
+    userId?: string | null,
     displayName: string | null,
     username?: string | null,
     email?: string | null,
@@ -57,4 +57,13 @@ const updateUser = (user: userInfo, updatedInfo: updatedFields | any) => {
     })
 }
 
-export { getUser, updateUser };
+
+const deleteUser = () => {
+    // delete user doc from `users` collection
+    // delete associate 'username' from the `usernames` collection by passing the username as document-ID
+}
+
+
+
+
+export { getUser, updateUser, deleteUser, };

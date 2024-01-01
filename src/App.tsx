@@ -3,12 +3,13 @@ import "./App.css";
 import { signIn, logOut, isAuthenticated, auth } from "./firebase/Auth";
 import TextEditor from "./components/TextEditor";
 import { getUser, updateUser } from "./firebase/Profile";
+import { getAllUsers } from "./firebase/SecurityTesting";
 
 const App: React.FC = () => {
   const signInUser = async () => {
     const userInfo = await signIn();
     console.log("Inside signInUser ", userInfo);
-  };
+  }; 
 
   const checkAuth = async () => {
     const user: any = await isAuthenticated();
@@ -16,26 +17,26 @@ const App: React.FC = () => {
       console.log("user is authenticated");
     } else {
       console.log("inside checkAuth", user.authState);
-    }
+    } 
   };
 
   const getUserInfo = async () => {
     const user = auth.currentUser;
-    if (user !== null) {
+    if (user !== null) { 
       const userInfo = await getUser(user);
       console.log("inside getUserInfo", userInfo);
     } else {
       console.log("user not authenticated");
     }
-  };
+  }; 
 
   const updateUserInfo = async () => {
     const user = auth.currentUser;
-    if (user !== null) {
+    if (user !== null) {  
       const userUpdateStatus = await updateUser(user, {
         // all fields will be send with values while dealing with form
-        username: "gdsc_rcciit",
-        displayName: "Google DSC RCCIIT 2023-24"
+        username: "data_dynamo",
+        // displayName: "ARGHYA"
       });
       console.log("user updation status ", userUpdateStatus);
     } else {
@@ -51,6 +52,7 @@ const App: React.FC = () => {
   useEffect(() => {
     checkAuth();
     getUserInfo();
+    // getAllUsers(); 
   }, []);
 
   return (

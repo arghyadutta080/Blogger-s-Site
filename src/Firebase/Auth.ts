@@ -10,7 +10,7 @@ const auth = getAuth(app);
 
 
 export interface userInfo {
-    uid: string | null,
+    userId?: string | null,
     displayName: string | null,
     username?: string | null,
     email: string | null,
@@ -32,7 +32,7 @@ const addUser = async (userInfo: userInfo) => {
         console.log(error);
     }
 }
-
+ 
 
 const signIn = () => {
     const provider = new GoogleAuthProvider();
@@ -42,12 +42,12 @@ const signIn = () => {
             .then((result) => {
                 const user = result.user
                 if (user) {
-                    const uid = user.uid;
+                    const userId = user.uid;
                     const displayName = user.displayName;
                     const email = user.email;
                     const photoURL = user.photoURL;
 
-                    const userInfo = { uid, displayName, email, photoURL, username: "" ,authState: true };
+                    const userInfo = { userId, displayName, email, photoURL, username: "" ,authState: true };
 
                     addUser(userInfo)                   // storing `userInfo` in form of a document in "users" collection
 
