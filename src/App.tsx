@@ -57,12 +57,12 @@ const App: React.FC = () => {
   const createNewBlog = async () => {
     const user = auth.currentUser;
     if (user != null) {
-      const userId = user.uid;
       const blogTitle = "Exploring the Enchanting World of Nature";
       const blogText = `<h2><strong style="color: var(--tw-prose-bold);">Exploring the Enchanting World of Nature</strong></h2><h3>In the hustle and bustle of our daily lives, it's easy to forget the beauty that surrounds us. Take a moment to step outside and immerse yourself in the wonders of nature. 🌳🌺</h3><p><br></p><h3><strong style="color: var(--tw-prose-bold);">Nature's Symphony:</strong></h3><ul><li>Close your eyes, and you'll hear the symphony of birdsong, the rustling of leaves, and the gentle hum of insects. It's a melody that has been playing for centuries, and each note is a testament to the harmony of the natural world.</li></ul><p><br></p><h3><strong style="color: var(--tw-prose-bold);">A Breath of Fresh Air:</strong></h3><ul><li>Inhale deeply, and feel the crispness of the air. Nature provides a breath of fresh air, cleansing both our lungs and our minds. There's something magical about the way a forest breeze carries away the worries that lingered.</li></ul><p><br></p>`;
 
       // image uploading to storage and downloading in form of string
       const previewImage = "";
+      
       const blogCreationStatus = await createBlog({
         blogTitle,
         blogText,
