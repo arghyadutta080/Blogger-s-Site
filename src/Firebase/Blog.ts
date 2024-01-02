@@ -1,5 +1,3 @@
-// createBlog(), updateBlog(), getBlog(), getAllBlogs(), getMyBlogs(), deleteBlog()
-
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { auth, db, userInfo } from "./Auth";
 import { getUser } from "./Profile";
