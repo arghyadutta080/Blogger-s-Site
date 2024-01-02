@@ -3,8 +3,10 @@ import "./App.css";
 import { signIn, logOut, isAuthenticated, auth } from "./firebase/Auth";
 import TextEditor from "./components/TextEditor";
 import { getUser, updateUser } from "./firebase/Profile";
-import { getAllUsers } from "./firebase/SecurityTesting";
 import { createBlog, getAllBlogs, getBlog, getMyBlogs, updateMyBlog } from "./firebase/Blog";
+import { createComment } from "./firebase/Comment";
+
+
 
 const App: React.FC = () => {
   const signInUser = async () => {
@@ -118,9 +120,28 @@ const App: React.FC = () => {
     }
   }
 
+
+  // comment functions
+
+  const createNewComment = async () => {
+    const user = auth.currentUser
+
+    if(user != null){
+      const commentText = "Testing Comment 2"
+      const blogId = "5K2rRi9yjKMmxH468q45tf81M";
+      const comment = {commentText, blogId};
+  
+      const commentCreationStatus = await createComment(comment, user)
+
+      console.log("comment creation status ", commentCreationStatus);
+    }
+  } 
+
+
+
   useEffect(() => {
     checkAuth();
-    getUserInfo();
+    getUserInfo(); 
     showMyBlogs();
     getBlogs();  
     showBlog();
@@ -171,6 +192,13 @@ const App: React.FC = () => {
         className=" border border-red-600 p-4 m-4"
       >
         Update Blog
+      </button>
+
+      <button
+        onClick={() => createNewComment()}
+        className=" border border-red-600 p-4 m-4"
+      >
+        Add comment
       </button>
     </>
   );
