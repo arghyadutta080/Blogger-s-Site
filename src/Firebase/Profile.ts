@@ -19,7 +19,7 @@ const getUser = (user: userInfo) => {
         if (docSnap.exists()) {
             resolve(docSnap.data());    // Document data
         } else {
-            console.log("No such document!");
+            reject("No such document for this user!");
         }
     })
 }

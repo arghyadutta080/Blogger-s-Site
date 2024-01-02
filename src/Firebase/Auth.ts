@@ -99,6 +99,8 @@ const logOut = () => {
                     console.log("user signed out")
                     resolve({ authState: false });
                 })
+            } else {
+                reject("Cann't logout. No user logged In!")
             }
             
         } catch (error) {

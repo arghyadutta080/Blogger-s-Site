@@ -4,7 +4,7 @@ import { signIn, logOut, isAuthenticated, auth } from "./firebase/Auth";
 import TextEditor from "./components/TextEditor";
 import { getUser, updateUser } from "./firebase/Profile";
 import { getAllUsers } from "./firebase/SecurityTesting";
-import { createBlog } from "./firebase/Blog";
+import { createBlog, getAllBlogs, getBlog, getMyBlogs, updateMyBlog } from "./firebase/Blog";
 
 const App: React.FC = () => {
   const signInUser = async () => {
@@ -29,7 +29,7 @@ const App: React.FC = () => {
       const userInfo = await getUser(user);
       console.log("inside getUserInfo", userInfo);
     } else {
-      console.log("user not authenticated");
+      console.log("user not authenticated, info not available!");
     }
   };
 
@@ -89,9 +89,41 @@ const App: React.FC = () => {
     }
   };
 
+  const updateBlog = async () => {
+    const blogText = "<h1>this is updated blog - 2</h1>"
+    const blogTitle = "Blog Updation Testing 2"
+    const previewImg = imgFile;
+    const updatedInfo = {blogText, blogTitle, previewImg}
+
+    const blogUpdationStatus = await updateMyBlog("GfV27aEP69nFpHKpu9MdE6LkT", updatedInfo);
+
+    console.log("Blog updation status", blogUpdationStatus);
+  }
+
+  const getBlogs = async () => {
+    const blogs = await getAllBlogs();
+    console.log("All blogs", blogs);
+  }
+
+  const showBlog = async () => {
+    const blog = await getBlog("GfV27aEP69nFpHKpu9M6LkT");
+    console.log("Get a blog", blog);
+  }
+
+  const showMyBlogs = async () => {
+    const user = auth.currentUser;
+    if(user != null) {
+      const blogs = await getMyBlogs(user.uid)
+      console.log("My blogs", blogs);
+    }
+  }
+
   useEffect(() => {
     checkAuth();
     getUserInfo();
+    showMyBlogs();
+    getBlogs();  
+    showBlog();
     // getAllUsers();
   }, []);
 
@@ -132,6 +164,13 @@ const App: React.FC = () => {
         className=" border border-red-600 p-4 m-4"
       >
         Create Blog
+      </button>
+
+      <button
+        onClick={() => updateBlog()}
+        className=" border border-red-600 p-4 m-4"
+      >
+        Update Blog
       </button>
     </>
   );
