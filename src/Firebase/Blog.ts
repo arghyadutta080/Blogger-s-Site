@@ -16,12 +16,6 @@ export interface blogger_commenter {
     photoURL: string | null
 }
 
-// export interface updatedBlogFields {
-//     blogTitle: string | null,
-//     blogText: string | null,
-//     imgFile: Blob | Uint8Array | ArrayBuffer
-// }
-
 
 const generateRandomString = (length: number) => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
