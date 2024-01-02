@@ -35,8 +35,8 @@ const updateUser = (user: userInfo, updatedInfo: updatedFields | any) => {
             const docSnap = await getDoc(docRef);
 
             if (!docSnap.exists()) {
-                const usernameRef = collection(db, "usernames");                    // add doc to `usernames` collections
-                await setDoc(doc(usernameRef, username), { username: username });
+                const collectionRef = collection(db, "usernames");                    // add doc to `usernames` collections
+                await setDoc(doc(collectionRef, username), { username: username });
 
                 const documentRef = doc(db, "users", user.email || "")              // adding/updating the 'username' field and other fields in user doc
                 await updateDoc(documentRef, updatedInfo)

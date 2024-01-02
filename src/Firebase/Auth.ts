@@ -25,8 +25,8 @@ const addUser = async (userInfo: userInfo) => {
         const docSnap = await getDoc(docRef);
 
         if (!docSnap.exists()) {
-            const userRef = collection(db, "users");
-            await setDoc(doc(userRef, userInfo.email || ""), userInfo);
+            const collectionRef = collection(db, "users");
+            await setDoc(doc(collectionRef, userInfo.email || ""), userInfo);
         }
     } catch (error) {
         console.log(error);

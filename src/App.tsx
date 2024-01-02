@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { signIn, logOut, isAuthenticated, auth } from "./firebase/Auth";
 import TextEditor from "./components/TextEditor";
@@ -52,22 +52,38 @@ const App: React.FC = () => {
     console.log("inside logoutUser", authState.authState);
   };
 
+
   // Blog Functions
+
+  const defaultBlob = new Blob(["Default Content"], { type: "text/plain" });
+  
+  const [imgFile, setImageFile] = useState<Blob | Uint8Array | ArrayBuffer >(defaultBlob);
+
+  const getImgFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const targetFiles = event.target.files;
+    if (
+      targetFiles &&
+      (targetFiles[0].type == "image/jpeg" ||
+        targetFiles[0].type == "image/png")
+    ) {
+      setImageFile(targetFiles[0]);
+    }
+  };
 
   const createNewBlog = async () => {
     const user = auth.currentUser;
     if (user != null) {
       const blogTitle = "Exploring the Enchanting World of Nature";
       const blogText = `<h2><strong style="color: var(--tw-prose-bold);">Exploring the Enchanting World of Nature</strong></h2><h3>In the hustle and bustle of our daily lives, it's easy to forget the beauty that surrounds us. Take a moment to step outside and immerse yourself in the wonders of nature. 🌳🌺</h3><p><br></p><h3><strong style="color: var(--tw-prose-bold);">Nature's Symphony:</strong></h3><ul><li>Close your eyes, and you'll hear the symphony of birdsong, the rustling of leaves, and the gentle hum of insects. It's a melody that has been playing for centuries, and each note is a testament to the harmony of the natural world.</li></ul><p><br></p><h3><strong style="color: var(--tw-prose-bold);">A Breath of Fresh Air:</strong></h3><ul><li>Inhale deeply, and feel the crispness of the air. Nature provides a breath of fresh air, cleansing both our lungs and our minds. There's something magical about the way a forest breeze carries away the worries that lingered.</li></ul><p><br></p>`;
-
-      // image uploading to storage and downloading in form of string
-      const previewImage = "";
-      
-      const blogCreationStatus = await createBlog({
-        blogTitle,
-        blogText,
-        previewImage,
-      }, user);
+    
+      const blogCreationStatus = await createBlog(
+        {
+          blogTitle,
+          blogText,
+        },
+        imgFile,
+        user
+      );
 
       console.log("new Blog Creation Status", blogCreationStatus);
     }
@@ -101,14 +117,22 @@ const App: React.FC = () => {
         Update
       </button>
 
+      <TextEditor />
+
+      <input
+        type="file"
+        onChange={(event) => getImgFile(event)}
+        alt=""
+        placeholder="Submit image"
+        className=" border-blue-500"
+      />
+
       <button
         onClick={() => createNewBlog()}
-        className=" border border-red-600 p-4"
+        className=" border border-red-600 p-4 m-4"
       >
         Create Blog
       </button>
-
-      <TextEditor />
     </>
   );
 };
