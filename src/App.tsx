@@ -42,6 +42,7 @@ const App: React.FC = () => {
         // all fields will be send with values while dealing with form
         username: "data_dynamo",
         // displayName: "ARGHYA"
+        // email field will be frezzed at non editable mode 
       });
       console.log("user updation status ", userUpdateStatus);
     } else {

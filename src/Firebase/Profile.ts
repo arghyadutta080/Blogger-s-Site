@@ -28,14 +28,14 @@ const getUser = (user: userInfo) => {
 const updateUser = (user: userInfo, updatedInfo: updatedFields | any) => {
     return new Promise(async (resolve, reject) => {
 
-        if (updatedInfo.username) {
+        if (updatedInfo.username !== "") {          // username have to be unique, and need to store in `usernames` collection
             const username = updatedInfo.username
 
             const docRef = doc(db, "usernames", username)       // get particular doc from `usernames` collection
             const docSnap = await getDoc(docRef);
 
             if (!docSnap.exists()) {
-                const collectionRef = collection(db, "usernames");                    // add doc to `usernames` collections
+                const collectionRef = collection(db, "usernames");                  // add doc to `usernames` collections
                 await setDoc(doc(collectionRef, username), { username: username });
 
                 const documentRef = doc(db, "users", user.email || "")              // adding/updating the 'username' field and other fields in user doc
@@ -43,7 +43,7 @@ const updateUser = (user: userInfo, updatedInfo: updatedFields | any) => {
                 resolve(true);
 
             } else {
-                const userInfo: any = await getUser(user);
+                const userInfo: any = await getUser(user);      // get authenticated_user info from `users` collection
 
                 if (docSnap.exists() && userInfo.username === username) {           // adding/updating the fields in user doc if the given username exists 
                     const documentRef = doc(db, "users", user.email || "")          // and belong to authenticated user doc

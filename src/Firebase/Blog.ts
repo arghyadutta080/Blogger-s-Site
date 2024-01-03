@@ -158,7 +158,6 @@ const getMyBlogs = (userId: string) => {          // get those blogs where blogg
 
             querySnapshot.forEach((doc) => {
                 myBlogs = [...myBlogs, doc.data()]
-                // console.log(doc.id, " => ", doc.data());
             });
 
             resolve(myBlogs);
