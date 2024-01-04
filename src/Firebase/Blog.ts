@@ -56,7 +56,7 @@ const createBlog = (blogInfo: blogInfo, imgFile: Blob | Uint8Array | ArrayBuffer
             const docSnap = await getDoc(docRef)
 
             if (!docSnap.exists()) {
-                const bloggerInfo: any = await getUser(user);       // collecting some primary information of blogger to show in blog because,
+                const bloggerInfo: any = await getUser();       // collecting some primary information of blogger to show in blog because,
                 const blogger: blogger_commenter = {                // blogger's original document isn't accessible to everyone, here user = auth.currentuser
                     userId: bloggerInfo.userId,
                     displayName: bloggerInfo.displayName,

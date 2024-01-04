@@ -71,7 +71,7 @@ const signIn = () => {
 };
 
 
-const isAuthenticated = () => {
+const AuthState = () => {
 
     return new Promise((resolve, reject) => {
         try {
@@ -110,4 +110,4 @@ const logOut = () => {
 }
 
 
-export { signIn, logOut, isAuthenticated, app, db, auth };
+export { signIn, logOut, AuthState, app, db, auth };

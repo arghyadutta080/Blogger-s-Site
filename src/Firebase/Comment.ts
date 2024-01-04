@@ -13,7 +13,7 @@ export interface comment {
 const createComment = (comment: comment, user: userInfo) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const commenterInfo: any = await getUser(user)
+            const commenterInfo: any = await getUser()
             const commenter: blogger_commenter = {
                 userId: commenterInfo.userId,
                 displayName: commenterInfo.displayName,
