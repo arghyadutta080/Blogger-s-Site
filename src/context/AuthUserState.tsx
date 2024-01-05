@@ -16,10 +16,11 @@ const AuthUserState: React.FC<AuthUserStateProps> = (props) => {
       const user: any = await AuthState();
 
       if (user.authState) {
-        setIsAuthenticated(true);
-
+        
         const userInfo: any = await getUser();
         setUser(userInfo) 
+        
+        setIsAuthenticated(true);
 
         console.log("AuthUserContext: user is authenticated");
       
@@ -38,7 +39,7 @@ const AuthUserState: React.FC<AuthUserStateProps> = (props) => {
     
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, checkAuth }}>
             {props.children}
         </AuthContext.Provider>
     )

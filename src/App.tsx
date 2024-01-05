@@ -159,7 +159,7 @@ const App: React.FC = () => {
           {/* <Route path="/:username/blogs" element={} /> */}
           {/* <Route path="/:username/:blogId" element={} /> */}
           {/* <Route path="/blogs" element={} /> */}
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path=":username/dashboard/posts" element={<Dashboard/>} />
 
           {/* <Route exact path="/event" element={<EventPage />} />
           <Route exact path="/notice" element={<NoticePage />} />

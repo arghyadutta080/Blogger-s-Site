@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import logo from "../../assets/logo.png"
-
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import logo from "../../assets/logo.png";
+import { signIn } from "../../firebase/Auth";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
+  const context = useContext(AuthContext);
+  const user = context.user;
+  const isAuthenticated = context.isAuthenticated;
+  const checkAuth = context.checkAuth;
+
+  const signInUser = async () => {
+    await signIn();
+    await checkAuth();  // globally user is set
+    console.log("Inside signInUser ", user);
+  };
+
   return (
     <header
       className={`${
-        mobileMenuOpen ? "hidden" : "bg-transparent fixed z-50 w-full"
+        mobileMenuOpen ? "hidden" : "bg-transparent absolute z-50 w-full"
       }`}
     >
       <nav
@@ -42,12 +51,26 @@ const Navbar: React.FC = () => {
           </button>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-          <a
-            href="#"
-            className="text-xl leading-6 border-2 border-white hover:border-blue-400 active:border-white py-2 px-3 rounded-full font-bold text-white hover:text-blue-400 active:text-white shadow-inner shadow-white hover:shadow-blue-400 active:shadow-white"
-          >
-            Log in / Sign up <span aria-hidden="true"></span>
-          </a>
+          {isAuthenticated ? (
+            <div className="flex flex-row items-center space-x-5">
+              <img
+                src={user.photoURL}
+                alt=""
+                className=" rounded-full h-12 w-12"
+              />
+              <span className="text-white font-bold text-xl">
+                {user.displayName}
+              </span>
+            </div>
+          ) : (
+            <a
+              href="#"
+              className="text-xl leading-6 border-2 border-white hover:border-blue-400 active:border-white py-2 px-3 rounded-full font-bold text-white hover:text-blue-400 active:text-white shadow-inner shadow-white hover:shadow-blue-400 active:shadow-white"
+              onClick={() => signInUser()}
+            >
+              Log in / Sign up <span aria-hidden="true"></span>
+            </a>
+          )}
         </div>
       </nav>
       <Dialog
@@ -90,6 +113,6 @@ const Navbar: React.FC = () => {
       </Dialog>
     </header>
   );
-}
+};
 
 export default Navbar;
