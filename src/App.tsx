@@ -15,6 +15,7 @@ import AuthUserState from "./context/AuthUserState";
 // import { AuthContext } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
 
 const App: React.FC = () => {
   // Authentication and User Functions
@@ -155,6 +156,11 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          {/* <Route path="/:username/blogs" element={} /> */}
+          {/* <Route path="/:username/:blogId" element={} /> */}
+          {/* <Route path="/blogs" element={} /> */}
+          <Route path="/dashboard" element={<Dashboard/>} />
+
           {/* <Route exact path="/event" element={<EventPage />} />
           <Route exact path="/notice" element={<NoticePage />} />
           <Route exact path="/team" element={<TeamPage />} />

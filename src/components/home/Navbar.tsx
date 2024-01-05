@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
             className="-m-1.5 p-1.5 flex flex-row justify-between items-center"
           >
             <span className=" font-bold text-3xl pe-2 text-blue-400">
-              Blogger’s Website{" "}
+              Blogger’s World{" "}
             </span>
             <img className="h-8 w-auto rounded-full" src={logo} alt="" />
           </a>
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5 flex flex-row justify-between">
               <span className=" font-bold text-xl pe-2 text-blue-400">
-                Blogger’s Website{" "}
+                Blogger’s World{" "}
               </span>
               <img className="h-8 w-auto rounded-full" src={logo} alt="" />
             </a>
