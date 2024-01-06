@@ -148,19 +148,24 @@ const getBlog = (blogId: string) => {             // get a particular blog with 
 }
 
 
-const getMyBlogs = (userId: string) => {          // get those blogs where bloggerId = auth.user.uid
+const getMyBlogs = () => {          // get those blogs where bloggerId = auth.user.uid
     return new Promise(async (resolve, reject) => {
         try {
-            const q = query(collection(db, "blogs"), where("blogger.userId", "==", userId));
-            const querySnapshot = await getDocs(q);
+            const user = auth.currentUser;
 
-            var myBlogs: any[] = [];
+            if(user != null){
+                const q = query(collection(db, "blogs"), where("blogger.userId", "==", user.uid));
+                const querySnapshot = await getDocs(q);
+    
+                var myBlogs: any[] = [];
+    
+                querySnapshot.forEach((doc) => {
+                    myBlogs = [...myBlogs, doc.data()]
+                });
+    
+                resolve(myBlogs);
+            }
 
-            querySnapshot.forEach((doc) => {
-                myBlogs = [...myBlogs, doc.data()]
-            });
-
-            resolve(myBlogs);
         
         } catch (error) {
             console.log(error);

@@ -7,7 +7,6 @@ import { signIn } from "../../firebase/Auth";
 
 const HeroSection: React.FC = () => {
   const context = useContext(AuthContext);
-  const user = context.user;
   const isAuthenticated = context.isAuthenticated;
   const checkAuth = context.checkAuth;
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const HeroSection: React.FC = () => {
   const navigation = async () => {
     if (isAuthenticated) {
       console.log("inside navigation")
-      navigate(`${user.username}/dashboard/posts`);
+      navigate(`/dashboard/posts`);
     } else {
       await signIn();
       await checkAuth(); // globally user is set

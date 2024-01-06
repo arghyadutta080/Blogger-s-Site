@@ -17,23 +17,9 @@ import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 
+
 const App: React.FC = () => {
   // Authentication and User Functions
-
-  const signInUser = async () => {
-    const userInfo = await signIn();
-    console.log("Inside signInUser ", userInfo);
-  };
-  
-
-  const getUserInfo = async () => {
-    // const user = auth.currentUser;
-    // if (user !== null) {
-    
-    // } else {
-    //   console.log("user not authenticated, info not available!");
-    // }
-  };
 
   const updateUserInfo = async () => {
     // const user = auth.currentUser;
@@ -50,10 +36,7 @@ const App: React.FC = () => {
     // }
   };
 
-  const logOutUser = async () => {
-    const authState: any = await logOut();
-    console.log("inside logoutUser", authState.authState);
-  };
+  
 
   // Blog Functions
 
@@ -120,7 +103,7 @@ const App: React.FC = () => {
   const showMyBlogs = async () => {
     const user = auth.currentUser;
     if (user != null) {
-      const blogs = await getMyBlogs(user.uid);
+      const blogs = await getMyBlogs();
       console.log("My blogs", blogs);
     }
   };
@@ -145,30 +128,19 @@ const App: React.FC = () => {
     // checkAuth();
     // getUserInfo();
     showMyBlogs();
-    getBlogs();  
+    getBlogs();
     // showBlog();
     // getAllUsers();
   }, []);
-
 
   return (
     <AuthUserState>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/:username/blogs" element={} /> */}
-          {/* <Route path="/:username/:blogId" element={} /> */}
-          {/* <Route path="/blogs" element={} /> */}
-          <Route path=":username/dashboard/posts" element={<Dashboard/>} />
-
-          {/* <Route exact path="/event" element={<EventPage />} />
-          <Route exact path="/notice" element={<NoticePage />} />
-          <Route exact path="/team" element={<TeamPage />} />
-          <Route exact path="/profile" element={<ProfilePage />} />
-          {/* routing ProfilePage components 
-          <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/login" element={<Login />} /> */}
+          <Route path="/dashboard/*" element={<Dashboard />} />
         </Routes>
+
       </Router>
 
       {/* <h1 className="text-red-900">Hello</h1>

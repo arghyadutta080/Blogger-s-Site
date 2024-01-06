@@ -1,15 +1,52 @@
-import React from "react";
-import Navbar from "../components/home/Navbar";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/dashboard/Sidebar";
-import BlogList from "../components/dashboard/blog/BlogList";
+import BlogList, { Blog } from "../components/dashboard/blog/BlogList";
+import { getAllBlogs, getMyBlogs } from "../firebase/Blog";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "../components/home/Navbar";
+import { AuthContext } from "../context/AuthContext";
 
 const Dashboard: React.FC = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  const context = useContext(AuthContext);
+  const user = context.user;
+  const isAuthenticated = context.isAuthenticated;
+
+  const getBlogs = async () => {
+    const bloglist: any = await getAllBlogs();
+    setBlogs(bloglist);
+    console.log("All blogs", blogs);
+  };
+
+  const showMyBlogs = async () => {
+    if(isAuthenticated) {
+      const bloglist: Blog[] | any = await getMyBlogs();
+      setBlogs(bloglist);
+    } else {
+      setBlogs([]);
+    }
+    console.log("My blogs", blogs);
+  };
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
   return (
-    <div className=" bg-slate-800 h-full">
-      <Navbar />
-      <div className="flex flex-row h-full">
-        <Sidebar />
-        <BlogList />
+    <div className="bg-slate-800 mb-0">
+      <div className=" h-full mb-0">
+        <Navbar />
+        <div className="flex flex-row h-full">
+          <Sidebar getBlogs={getBlogs} showMyBlogs={showMyBlogs} />
+          <Routes>
+            <Route path="posts" element={<BlogList blogs={blogs} />} />
+            <Route
+              path=":username/blogs"
+              element={<BlogList blogs={blogs} />}
+            />
+          </Routes>
+        </div>
       </div>
     </div>
   );
