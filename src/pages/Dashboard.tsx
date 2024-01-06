@@ -5,12 +5,12 @@ import { getAllBlogs, getMyBlogs } from "../firebase/Blog";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/home/Navbar";
 import { AuthContext } from "../context/AuthContext";
+import Profile from "../components/Profile";
 
 const Dashboard: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
   const context = useContext(AuthContext);
-  const user = context.user;
   const isAuthenticated = context.isAuthenticated;
 
   const getBlogs = async () => {
@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
   };
 
   const showMyBlogs = async () => {
-    if(isAuthenticated) {
+    if (isAuthenticated) {
       const bloglist: Blog[] | any = await getMyBlogs();
       setBlogs(bloglist);
     } else {
@@ -45,6 +45,7 @@ const Dashboard: React.FC = () => {
               path=":username/blogs"
               element={<BlogList blogs={blogs} />}
             />
+            <Route path="profile/:username" element={<Profile />} />
           </Routes>
         </div>
       </div>

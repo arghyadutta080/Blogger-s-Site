@@ -16,6 +16,7 @@ import AuthUserState from "./context/AuthUserState";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import { Toaster } from "react-hot-toast";
 
 
 const App: React.FC = () => {
@@ -140,7 +141,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
         </Routes>
-
+        <Toaster position="top-center" reverseOrder={false} />
       </Router>
 
       {/* <h1 className="text-red-900">Hello</h1>

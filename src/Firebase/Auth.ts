@@ -16,6 +16,7 @@ export interface userInfo {
     email: string | null,
     photoURL: string | null,
     authState?: boolean
+    field?: string
 }
 
 
@@ -47,7 +48,7 @@ const signIn = () => {
                     const email = user.email;
                     const photoURL = user.photoURL;
 
-                    const userInfo = { userId, displayName, email, photoURL, username: "" ,authState: true };
+                    const userInfo = { userId, displayName, email, photoURL, username: "", field: "" ,authState: true };
 
                     addUser(userInfo)                   // storing `userInfo` in form of a document in "users" collection
 

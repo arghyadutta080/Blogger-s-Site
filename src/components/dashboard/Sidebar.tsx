@@ -5,13 +5,12 @@ import { FaPlus, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logOut } from "../../firebase/Auth";
-
+import ProfileModal from "../Profile";
 
 interface Props {
   getBlogs: () => Promise<void>;
   showMyBlogs: () => Promise<void>;
 }
-
 
 const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
   const context = useContext(AuthContext);
@@ -38,6 +37,7 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
           <FaPlus className=" h-5 w-5" />{" "}
           <span className=" text-2xl font-bold">New Post</span>
         </button>
+        {/* new blog create and preview */}
 
         <Link
           to="posts"
@@ -54,9 +54,10 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
           <LiaCommentDotsSolid className={iconStyle} />{" "}
           <span className={textStyle}>Comments</span>
         </li>
+        {/* view comments */}
 
         <Link
-          to={`${user?.username}/blogs`}
+          to={`${user?.username || "_undefined_username_"}/blogs`}
           className={`${listStyle} text-green-400 hover:text-white active:text-green-400`}
           onClick={() => showMyBlogs()}
         >
@@ -64,12 +65,15 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
           <span className={textStyle}>My Blogs</span>
         </Link>
 
-        <li
+        <Link
+          to={`profile/${user?.username || "_undefined_username_"}`}
           className={`${listStyle} text-green-400 hover:text-white active:text-green-400`}
         >
           <FaUserCircle className={iconStyle} />{" "}
           <span className={textStyle}>Profile</span>
-        </li>
+        </Link>
+        {/* <ProfileModal /> */}
+        {/* profile update */}
 
         <button
           className={`${listStyle} border-2 ${buttonStyle}`}

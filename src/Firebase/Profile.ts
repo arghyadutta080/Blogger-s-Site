@@ -8,7 +8,8 @@ interface updatedFields {
     username?: string | null,
     email?: string | null,
     photoURL?: string | null,
-    authState?: boolean
+    authState?: boolean,
+    field?: string
 }
 
 

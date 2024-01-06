@@ -8,7 +8,6 @@ interface AuthUserStateProps {
   children: React.ReactNode;
 }
 
-
 const AuthUserState: React.FC<AuthUserStateProps> = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<userInfo | null>(null);
