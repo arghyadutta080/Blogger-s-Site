@@ -5,14 +5,15 @@ import { FaPlus, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logOut } from "../../firebase/Auth";
-import ProfileModal from "../Profile";
+
 
 interface Props {
   getBlogs: () => Promise<void>;
   showMyBlogs: () => Promise<void>;
+  showMyComments: () => Promise<void>;
 }
 
-const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
+const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs, showMyComments }) => {
   const context = useContext(AuthContext);
   const user = context.user;
   const setIsAuthenticated = context.setIsAuthenticated;
@@ -48,13 +49,14 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
           <span className={textStyle}>Posts</span>
         </Link>
 
-        <li
+        <Link
+          to={`${user?.username || "_undefined_username_"}/comments`}
           className={`${listStyle} text-green-400 hover:text-white active:text-green-400`}
+          onClick={() => showMyComments()}
         >
           <LiaCommentDotsSolid className={iconStyle} />{" "}
           <span className={textStyle}>Comments</span>
-        </li>
-        {/* view comments */}
+        </Link>
 
         <Link
           to={`${user?.username || "_undefined_username_"}/blogs`}
@@ -72,8 +74,6 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs }) => {
           <FaUserCircle className={iconStyle} />{" "}
           <span className={textStyle}>Profile</span>
         </Link>
-        {/* <ProfileModal /> */}
-        {/* profile update */}
 
         <button
           className={`${listStyle} border-2 ${buttonStyle}`}

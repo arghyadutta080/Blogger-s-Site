@@ -4,6 +4,9 @@ import { Blog } from "./dashboard/blog/BlogList";
 import { getMyBlogs } from "../firebase/Blog";
 import { updateUser } from "../firebase/Profile";
 import toast from "react-hot-toast";
+import { Comment } from "./dashboard/comment/CommentList";
+import { getMyComments } from "../firebase/Comment";
+
 
 const Profile: React.FC = () => {
   const context = useContext(AuthContext);
@@ -11,11 +14,14 @@ const Profile: React.FC = () => {
   const isAuthenticated = context.isAuthenticated;
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [comments, setComments] = useState<Comment[]>([])
+
   const [editMode, setEditMode] = useState(false);
 
   const [fullName, setFullName] = useState<string>("");
   const [field, setField] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,12 +44,20 @@ const Profile: React.FC = () => {
     setBlogs(Blogs);
   };
 
+  const getComments =async () => {
+    const Comments: Comment[] | any = await getMyComments();
+    setComments(Comments);
+  }
+
+
   useEffect(() => {
     setFullName(user?.displayName);
     setField(user?.field);
     setUsername(user?.username);
     getBlogs();
+    getComments();
   }, []);
+
 
   return (
     <>
@@ -157,7 +171,7 @@ const Profile: React.FC = () => {
                       editMode ? "" : "pl-10"
                     } text-lg leading-6 text-white sm:col-span-2 sm:mt-0`}
                   >
-                    {user?.company}
+                    {comments.length}
                   </dd>
                 </div>
               </div>

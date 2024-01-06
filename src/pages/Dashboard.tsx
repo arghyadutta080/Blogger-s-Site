@@ -6,9 +6,14 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/home/Navbar";
 import { AuthContext } from "../context/AuthContext";
 import Profile from "../components/Profile";
+import CommentList, {
+  Comment,
+} from "../components/dashboard/comment/CommentList";
+import { getMyComments } from "../firebase/Comment";
 
 const Dashboard: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const context = useContext(AuthContext);
   const isAuthenticated = context.isAuthenticated;
@@ -27,10 +32,21 @@ const Dashboard: React.FC = () => {
       setBlogs([]);
     }
     console.log("My blogs", blogs);
+  }; 
+
+  const showMyComments = async () => {
+    if (isAuthenticated) {
+      const commentList: Comment[] | any = await getMyComments();
+      setComments(commentList);
+      console.log("comments", comments);
+    } else {
+      setComments([]);
+    }
   };
 
   useEffect(() => {
     getBlogs();
+    showMyComments();
   }, []);
 
   return (
@@ -38,12 +54,16 @@ const Dashboard: React.FC = () => {
       <div className=" h-full mb-0">
         <Navbar />
         <div className="flex flex-row h-full">
-          <Sidebar getBlogs={getBlogs} showMyBlogs={showMyBlogs} />
+          <Sidebar getBlogs={getBlogs} showMyBlogs={showMyBlogs} showMyComments={showMyComments} />
           <Routes>
             <Route path="posts" element={<BlogList blogs={blogs} />} />
             <Route
               path=":username/blogs"
               element={<BlogList blogs={blogs} />}
+            />
+            <Route
+              path=":username/comments"
+              element={<CommentList comments={comments} />}
             />
             <Route path="profile/:username" element={<Profile />} />
           </Routes>

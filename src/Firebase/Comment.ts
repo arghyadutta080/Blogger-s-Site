@@ -1,5 +1,5 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
-import { db, userInfo } from "./Auth"
+import { auth, db, userInfo } from "./Auth"
 import { blogger_commenter, getBlog } from "./Blog"
 import { getUser } from "./Profile"
 
@@ -34,19 +34,23 @@ const createComment = (comment: comment, user: userInfo) => {
 }
 
 
-const getMyComments = (userId: string) => {       // query for comparing auth_user_uid(passed as parameter) with bloggerId in comment document 
-    return new Promise (async (resolve, reject) => {
+const getMyComments = () => {       // query for comparing auth_user_uid(passed as parameter) with bloggerId in comment document 
+    return new Promise(async (resolve, reject) => {
         try {
-            const q = query(collection(db, "comments"), where("commenter.userId", "==", userId));
-            const querySnapshot = await getDocs(q);
+            const user = auth.currentUser;
 
-            var myComments: any[] = [];
+            if (user != null) {
+                const q = query(collection(db, "comments"), where("commenter.userId", "==", user.uid));
+                const querySnapshot = await getDocs(q);
 
-            querySnapshot.forEach((doc) => {
-                myComments = [...myComments,{ commentId: doc.id, comment: doc.data()}]
-            });
+                var myComments: any[] = [];
 
-            resolve(myComments);
+                querySnapshot.forEach((doc) => {
+                    myComments = [...myComments, { commentId: doc.id, comment: doc.data() }]
+                });
+
+                resolve(myComments);
+            }
 
         } catch (error) {
             console.log(error);

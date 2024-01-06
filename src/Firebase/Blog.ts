@@ -166,7 +166,6 @@ const getMyBlogs = () => {          // get those blogs where bloggerId = auth.us
                 resolve(myBlogs);
             }
 
-        
         } catch (error) {
             console.log(error);
         }
