@@ -6,13 +6,14 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/home/Navbar";
 import { AuthContext } from "../context/AuthContext";
 import Profile from "../components/Profile";
-import CommentList, {
-  Comment,
-} from "../components/dashboard/comment/CommentList";
+import CommentList, { Comment } from "../components/dashboard/comment/CommentList";
 import { getMyComments } from "../firebase/Comment";
+import NewBlog from "../components/dashboard/blog/NewBlog";
+
 
 const Dashboard: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [myBlogs, setMyBlogs] = useState<Blog[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
 
   const context = useContext(AuthContext);
@@ -27,12 +28,12 @@ const Dashboard: React.FC = () => {
   const showMyBlogs = async () => {
     if (isAuthenticated) {
       const bloglist: Blog[] | any = await getMyBlogs();
-      setBlogs(bloglist);
+      setMyBlogs(bloglist);
     } else {
-      setBlogs([]);
+      setMyBlogs([]);
     }
     console.log("My blogs", blogs);
-  }; 
+  };
 
   const showMyComments = async () => {
     if (isAuthenticated) {
@@ -46,26 +47,33 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     getBlogs();
+    showMyBlogs();
     showMyComments();
   }, []);
 
+  
   return (
     <div className="bg-slate-800 mb-0">
       <div className=" h-full mb-0">
         <Navbar />
         <div className="flex flex-row h-full">
-          <Sidebar getBlogs={getBlogs} showMyBlogs={showMyBlogs} showMyComments={showMyComments} />
+          <Sidebar
+            getBlogs={getBlogs}
+            showMyBlogs={showMyBlogs}
+            showMyComments={showMyComments}
+          />
           <Routes>
             <Route path="posts" element={<BlogList blogs={blogs} />} />
             <Route
               path=":username/blogs"
-              element={<BlogList blogs={blogs} />}
+              element={<BlogList blogs={myBlogs} />}
             />
             <Route
               path=":username/comments"
               element={<CommentList comments={comments} />}
             />
             <Route path="profile/:username" element={<Profile />} />
+            <Route path=":username/new-blog" element={<NewBlog />} />
           </Routes>
         </div>
       </div>

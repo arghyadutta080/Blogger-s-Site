@@ -1,18 +1,20 @@
 import React from "react";
 import { Blog } from "./BlogList";
 
+
 export interface props {
   blog: Blog;
 }
 
+
 const BlogElement: React.FC<props> = ({ blog }) => {
   return (
     <div className={` pt-8 pb-10`}>
-      <div>
+      <div className="h-60 w-96 rounded-2xl border-2">
         <img
-          src={blog.previewImage}
+          src={blog.previewImg}
           alt=""
-          className=" h-60 w-96 rounded-3xl"
+          className=" h-full w-full rounded-2xl object-cover"
         />
       </div>
       <div className="flex flex-col text-white space-y-3 mt-8">

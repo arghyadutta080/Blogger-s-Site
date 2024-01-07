@@ -46,7 +46,7 @@ const createImgURL = (fileId: string, file: Blob | Uint8Array | ArrayBuffer) => 
 }
 
 
-const createBlog = (blogInfo: blogInfo, imgFile: Blob | Uint8Array | ArrayBuffer, user: userInfo) => {
+const createBlog = (blogInfo: blogInfo, imgFile: Blob | Uint8Array | ArrayBuffer) => {
     return new Promise(async (resolve, reject) => {
 
         const blogId: string = generateRandomString(25);            // creating unique blogID
@@ -68,10 +68,10 @@ const createBlog = (blogInfo: blogInfo, imgFile: Blob | Uint8Array | ArrayBuffer
                 const collectionRef = collection(db, "blogs")
                 await setDoc(doc(collectionRef, blogId), { ...blogInfo, blogId, blogger, previewImg })
 
-                resolve("success");
+                resolve(true);
 
             } else {
-                const blogCreationStatus = await createBlog(blogInfo, imgFile, user);           // recursive call to createBlog() if blogID != unique
+                const blogCreationStatus = await createBlog(blogInfo, imgFile);           // recursive call to createBlog() if blogID != unique
                 resolve(blogCreationStatus);
             }
         } catch (error) {

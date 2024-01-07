@@ -1,43 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import { signIn, logOut, auth, AuthState } from "./firebase/Auth";
-// import TextEditor from "./components/TextEditor";
-import { getUser, updateUser } from "./firebase/Profile";
+import { auth } from "./firebase/Auth";
 import {
-  createBlog,
-  getAllBlogs,
   getBlog,
-  getMyBlogs,
   updateMyBlog,
 } from "./firebase/Blog";
 import { createComment } from "./firebase/Comment";
 import AuthUserState from "./context/AuthUserState";
-// import { AuthContext } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import { Toaster } from "react-hot-toast";
+import BlogPreviewPage from "./pages/BlogPreviewPage";
 
 
 const App: React.FC = () => {
-  // Authentication and User Functions
-
-  const updateUserInfo = async () => {
-    // const user = auth.currentUser;
-    // if (user !== null) {
-    const userUpdateStatus = await updateUser({
-      // all fields will be send with values while dealing with form
-      username: "data_dynamo",
-      // displayName: "ARGHYA"
-      // email field will be frezzed at non editable mode
-    });
-    console.log("user updation status ", userUpdateStatus);
-    // } else {
-    //   console.log("user not authenticated");
-    // }
-  };
-
-  
 
   // Blog Functions
 
@@ -47,35 +24,6 @@ const App: React.FC = () => {
     defaultBlob
   );
 
-  const getImgFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const targetFiles = event.target.files;
-    if (
-      targetFiles &&
-      (targetFiles[0].type == "image/jpeg" ||
-        targetFiles[0].type == "image/png")
-    ) {
-      setImageFile(targetFiles[0]);
-    }
-  };
-
-  const createNewBlog = async () => {
-    const user = auth.currentUser;
-    if (user != null) {
-      const blogTitle = "Exploring the Enchanting World of Nature";
-      const blogText = `<h2><strong style="color: var(--tw-prose-bold);">Exploring the Enchanting World of Nature</strong></h2><h3>In the hustle and bustle of our daily lives, it's easy to forget the beauty that surrounds us. Take a moment to step outside and immerse yourself in the wonders of nature. 🌳🌺</h3><p><br></p><h3><strong style="color: var(--tw-prose-bold);">Nature's Symphony:</strong></h3><ul><li>Close your eyes, and you'll hear the symphony of birdsong, the rustling of leaves, and the gentle hum of insects. It's a melody that has been playing for centuries, and each note is a testament to the harmony of the natural world.</li></ul><p><br></p><h3><strong style="color: var(--tw-prose-bold);">A Breath of Fresh Air:</strong></h3><ul><li>Inhale deeply, and feel the crispness of the air. Nature provides a breath of fresh air, cleansing both our lungs and our minds. There's something magical about the way a forest breeze carries away the worries that lingered.</li></ul><p><br></p>`;
-
-      const blogCreationStatus = await createBlog(
-        {
-          blogTitle,
-          blogText,
-        },
-        imgFile,
-        user
-      );
-
-      console.log("new Blog Creation Status", blogCreationStatus);
-    }
-  };
 
   const updateBlog = async () => {
     const blogText = "<h1>this is updated blog - 2</h1>";
@@ -91,23 +39,12 @@ const App: React.FC = () => {
     console.log("Blog updation status", blogUpdationStatus);
   };
 
-  const getBlogs = async () => {
-    const blogs = await getAllBlogs();
-    console.log("All blogs", blogs);
-  };
 
   const showBlog = async () => {
     const blog = await getBlog("GfV27aEP69nFpHKpu9M6LkT");
     console.log("Get a blog", blog);
   };
 
-  const showMyBlogs = async () => {
-    const user = auth.currentUser;
-    if (user != null) {
-      const blogs = await getMyBlogs();
-      console.log("My blogs", blogs);
-    }
-  };
 
   // comment functions
 
@@ -125,14 +62,6 @@ const App: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    // checkAuth();
-    // getUserInfo();
-    showMyBlogs();
-    getBlogs();
-    // showBlog();
-    // getAllUsers();
-  }, []);
 
   return (
     <AuthUserState>
@@ -140,6 +69,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/:username/:blogname/preview" element={<BlogPreviewPage />} />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
       </Router>

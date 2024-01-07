@@ -11,6 +11,7 @@ import { getMyComments } from "../firebase/Comment";
 const Profile: React.FC = () => {
   const context = useContext(AuthContext);
   const user = context.user;
+  const setUser = context.setUser;
   const isAuthenticated = context.isAuthenticated;
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -18,7 +19,6 @@ const Profile: React.FC = () => {
 
   const [editMode, setEditMode] = useState(false);
 
-  const [fullName, setFullName] = useState<string>("");
   const [field, setField] = useState<string>("");
   const [username, setUsername] = useState<string>("");
 
@@ -29,8 +29,17 @@ const Profile: React.FC = () => {
     const userUpdateStatus = await updateUser({
       username: username,
       field: field,
-      displayName: fullName,
     });
+
+    setUser({
+      userId: user.userId,
+      photoURL: user.photoURL,
+      field: field,
+      username: username,
+      email: user.email,
+      displayName: user.displayName,
+      authState: user.authState
+    })
 
     if (userUpdateStatus) {
       toast.success("Your profile is successfully updated");
@@ -49,13 +58,13 @@ const Profile: React.FC = () => {
     setComments(Comments);
   }
 
-
+ 
   useEffect(() => {
-    setFullName(user?.displayName);
     setField(user?.field);
     setUsername(user?.username);
     getBlogs();
     getComments();
+    console.log(user);
   }, []);
 
 
@@ -85,18 +94,13 @@ const Profile: React.FC = () => {
                   <dt className="text-lg font-medium leading-6 text-white">
                     Full name
                   </dt>
-                  {editMode ? (
-                    <input
-                      type="text"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
-                  ) : (
-                    <dd className="mt-1 pl-10 text-lg leading-6 text-white sm:col-span-2 sm:mt-0">
-                      {fullName}
-                    </dd>
-                  )}
+                  <dd
+                    className={`mt-1 ${
+                      editMode ? "" : "pl-10"
+                    } text-lg leading-6 text-white sm:col-span-2 sm:mt-0`}
+                  >
+                    {user.displayName}
+                  </dd>
                 </div>
                 <div className="pl-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-lg font-medium leading-6 text-white">

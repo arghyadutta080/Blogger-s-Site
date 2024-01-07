@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BlogElement from "./BlogElement";
 import no_blog from "../../../assets/no_blog.png";
 import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 export interface Blog {
   blogId: string;
   blogText: string;
   blogTitle: string;
-  previewImage: string;
+  previewImg: string;
   blogger: {
     displayName: string;
     photoURL: string;
@@ -26,6 +28,16 @@ const BlogList: React.FC<Props> = ({ blogs }) => {
 
   const context = useContext(AuthContext);
   const isAuthenticated = context.isAuthenticated;
+  const user = context.user;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated && user.username == "") {
+      navigate(`/dashboard/profile/_undefined_username_`);
+      toast.success("Setup your @username first!");
+    }
+  }, []);
 
   return (
     <>

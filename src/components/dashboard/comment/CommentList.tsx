@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import CommentElement from "./CommentElement";
 import no_comment from "../../../assets/no_comment.png"
 import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 export interface Comment {
@@ -28,6 +30,16 @@ const CommentList: React.FC<Props> = ({comments}) => {
 
     const context = useContext(AuthContext);
     const isAuthenticated = context.isAuthenticated;
+    const user = context.user;
+
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+      if (isAuthenticated && user.username == "") {
+        navigate(`/dashboard/profile/_undefined_username_`);
+        toast.success("Setup your @username first!");
+      }
+    },[])
 
   return (
     <>

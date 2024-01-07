@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { FaRegPenToSquare, FaRegCopy } from "react-icons/fa6";
 import { LiaCommentDotsSolid } from "react-icons/lia";
 import { FaPlus, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logOut } from "../../firebase/Auth";
-
+import toast from "react-hot-toast";
 
 interface Props {
   getBlogs: () => Promise<void>;
@@ -13,7 +13,11 @@ interface Props {
   showMyComments: () => Promise<void>;
 }
 
-const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs, showMyComments }) => {
+const Sidebar: React.FC<Props> = ({
+  getBlogs,
+  showMyBlogs,
+  showMyComments,
+}) => {
   const context = useContext(AuthContext);
   const user = context.user;
   const setIsAuthenticated = context.setIsAuthenticated;
@@ -31,13 +35,17 @@ const Sidebar: React.FC<Props> = ({ getBlogs, showMyBlogs, showMyComments }) => 
     console.log("inside logoutUser", authState.authState);
   };
 
+
   return (
     <div className=" w-2/12 h-screen z-10 pt-16 space-y-5">
       <ul className=" space-y-10 ps-10 border-t-2 h-full">
-        <button className={`${listStyle} mt-8 ${buttonStyle}`}>
+        <Link
+          to={`${user?.username || "_undefined_username_"}/new-blog`}
+          className={`${listStyle} mt-8 ${buttonStyle}`}
+        >
           <FaPlus className=" h-5 w-5" />{" "}
-          <span className=" text-2xl font-bold">New Post</span>
-        </button>
+          <span className=" text-2xl font-bold">New Blog</span>
+        </Link>
         {/* new blog create and preview */}
 
         <Link
