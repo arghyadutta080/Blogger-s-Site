@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Blog } from "./BlogList";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 
 export interface props {
@@ -8,8 +10,16 @@ export interface props {
 
 
 const BlogElement: React.FC<props> = ({ blog }) => {
+  const context = useContext(AuthContext);
+  const user = context.user;
+  const navigate = useNavigate();
+
+  const redirectToViewBlog = () => {
+    navigate(`/${user.username}/blog/${blog.blogId}`)
+  }
+
   return (
-    <div className={` pt-8 pb-10`}>
+    <div className={` pt-8 pb-10`} onClick={() => redirectToViewBlog()}>
       <div className="h-60 w-96 rounded-2xl border-2">
         <img
           src={blog.previewImg}

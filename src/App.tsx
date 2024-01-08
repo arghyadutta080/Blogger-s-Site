@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { auth } from "./firebase/Auth";
-import {
-  getBlog,
-  updateMyBlog,
-} from "./firebase/Blog";
+import { getBlog, updateMyBlog } from "./firebase/Blog";
 import { createComment } from "./firebase/Comment";
 import AuthUserState from "./context/AuthUserState";
 import HomePage from "./pages/HomePage";
@@ -12,10 +9,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import { Toaster } from "react-hot-toast";
 import BlogPreviewPage from "./pages/BlogPreviewPage";
-
+import ViewBlog from "./pages/ViewBlog";
 
 const App: React.FC = () => {
-
   // Blog Functions
 
   const defaultBlob = new Blob(["Default Content"], { type: "text/plain" });
@@ -23,7 +19,6 @@ const App: React.FC = () => {
   const [imgFile, setImageFile] = useState<Blob | Uint8Array | ArrayBuffer>(
     defaultBlob
   );
-
 
   const updateBlog = async () => {
     const blogText = "<h1>this is updated blog - 2</h1>";
@@ -39,12 +34,10 @@ const App: React.FC = () => {
     console.log("Blog updation status", blogUpdationStatus);
   };
 
-
   const showBlog = async () => {
     const blog = await getBlog("GfV27aEP69nFpHKpu9M6LkT");
     console.log("Get a blog", blog);
   };
-
 
   // comment functions
 
@@ -62,14 +55,20 @@ const App: React.FC = () => {
     }
   };
 
-
   return (
     <AuthUserState>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/:username/:blogname/preview" element={<BlogPreviewPage />} />
+          <Route
+            path="/:username/:blogname/preview"
+            element={<BlogPreviewPage />}
+          />
+          <Route
+            path="/:username/blog/:blogId"
+            element={<ViewBlog />}
+          />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
       </Router>

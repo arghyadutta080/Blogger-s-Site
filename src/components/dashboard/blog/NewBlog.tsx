@@ -28,12 +28,13 @@ const NewBlog: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (user.username == "") {              // checking username is set or not
+    if (user.username == "") {
+      // checking username is set or not
       navigate(`/dashboard/profile/_undefined_username_`);
-      toast.success("Setup your @username first!");
+      toast.error("Setup your @username first!");
     }
-    const queryParams = new URLSearchParams(location.search);   // query portion( "...?data=${encodeURIComponent(<-- sent data -->)}" ) is fetching from route-URL(navigated route)
-    const data = queryParams.get("data");   // fetching required data from "data" parameter of the query
+    const queryParams = new URLSearchParams(location.search); // query portion( "...?data=${encodeURIComponent(<-- sent data -->)}" ) is fetching from route-URL(navigated route)
+    const data = queryParams.get("data"); // fetching required data from "data" parameter of the query
     setHtmlText(data || "");
   }, [location.search]);
 
@@ -62,7 +63,7 @@ const NewBlog: React.FC = () => {
         blogTitle,
         blogText: htmlText,
       },
-      imgFile       // a blob file received from getImgFile()
+      imgFile // a blob file received from getImgFile()
     );
 
     if (blogCreationStatus) {
@@ -71,6 +72,13 @@ const NewBlog: React.FC = () => {
       toast.error("Blog creation failed!");
     }
   };
+
+  console.log(
+    imgFile?.type == defaultBlob.type,
+    blogTitle == "",
+    htmlText == "",
+    htmlText == "<p><br></p>"
+  );
 
   return (
     <div className="w-10/12 h-screen z-10 mt-16 ">
@@ -111,23 +119,23 @@ const NewBlog: React.FC = () => {
           </button>
           <button
             disabled={
-              imgFile?.type == defaultBlob.type &&
-              blogTitle == "" &&
-              htmlText == ""
+              imgFile?.type == defaultBlob.type ||
+              blogTitle == "" ||
+              (htmlText == "" || htmlText == '<p><br></p>')
                 ? true
                 : false
             }
             onClick={() => createNewBlog()}
             className={`${
-              imgFile?.type == defaultBlob.type &&
-              blogTitle == "" &&
-              htmlText == ""
+              imgFile?.type == defaultBlob.type ||
+              blogTitle == "" ||
+              (htmlText == "" || htmlText == '<p><br></p>')
                 ? "cursor-not-allowed"
                 : ""
             } px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 ${
               imgFile?.type != defaultBlob.type &&
               blogTitle != "" &&
-              htmlText != ""
+              (htmlText != "" || htmlText != '<p><br></p>')
                 ? "active:border-blue-400 active:border-4"
                 : ""
             }`}

@@ -30,7 +30,7 @@ const BlogPreviewPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-900">
+    <div>
       <Navbar />
       <div className="relative isolate overflow-hidden bg-gray-900 md:py-20 sm:py-32 h-full mb-0 flex flex-col justify-center items-center">
         <h1 className="text-center font-bold text-white text-3xl mb-10">

@@ -8,13 +8,13 @@ import toast from "react-hot-toast";
 
 export interface Blog {
   blogId: string;
-  blogText: string;
+  blogText: string | TrustedHTML;
   blogTitle: string;
   previewImg: string;
   blogger: {
     displayName: string;
     photoURL: string;
-    userId: string;
+    // userId: string;
     username: string;
   };
 }
@@ -35,7 +35,7 @@ const BlogList: React.FC<Props> = ({ blogs }) => {
   useEffect(() => {
     if (isAuthenticated && user.username == "") {
       navigate(`/dashboard/profile/_undefined_username_`);
-      toast.success("Setup your @username first!");
+      toast.error("Setup your @username first!");
     }
   }, []);
 

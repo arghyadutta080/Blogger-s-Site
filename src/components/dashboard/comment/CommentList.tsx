@@ -37,7 +37,7 @@ const CommentList: React.FC<Props> = ({comments}) => {
     useEffect(() =>{
       if (isAuthenticated && user.username == "") {
         navigate(`/dashboard/profile/_undefined_username_`);
-        toast.success("Setup your @username first!");
+        toast.error("Setup your @username first!");
       }
     },[])
 
