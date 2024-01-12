@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
-import { updateMyBlog } from "./firebase/Blog";
 import AuthUserState from "./context/AuthUserState";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

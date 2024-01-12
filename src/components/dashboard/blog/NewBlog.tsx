@@ -47,7 +47,7 @@ const NewBlog: React.FC = () => {
 
   const defaultBlob = new Blob(["Default Content"], { type: "text/plain" });
 
-  const [imgFile, setImageFile] = useState<Blob | Uint8Array | ArrayBuffer>(
+  const [imgFile, setImageFile] = useState<Blob | Uint8Array | ArrayBuffer | any>(
     defaultBlob
   );
 
@@ -149,7 +149,7 @@ const NewBlog: React.FC = () => {
                   } px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 ${
                     imgFile?.type != defaultBlob.type &&
                     blogTitle != "" &&
-                    (htmlText != "" || htmlText != "<p><br></p>")
+                    (htmlText != "")
                       ? "active:border-blue-400 active:border-4"
                       : ""
                   }`}

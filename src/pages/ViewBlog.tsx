@@ -9,7 +9,7 @@ import CommentElement from "../components/dashboard/comment/CommentElement";
 import { CiPaperplane } from "react-icons/ci";
 import ReactLoading from "react-loading";
 import toast from "react-hot-toast";
-
+import { Comment } from "../components/dashboard/comment/CommentList";
 
 const ViewBlog: React.FC = () => {
   const { blogId }: any = useParams();
@@ -32,7 +32,7 @@ const ViewBlog: React.FC = () => {
   };
 
   const doComment = async () => {
-    if (myComment !== "") {  
+    if (myComment !== "") {
       setOnLoading(true);
       const commentInfo: comment = {
         commentText: myComment,
@@ -51,7 +51,6 @@ const ViewBlog: React.FC = () => {
     blogData(blogId);
     showComments(blogId);
   }, []);
-
 
   return (
     <div>
@@ -81,10 +80,12 @@ const ViewBlog: React.FC = () => {
           </a>
         </div>
         <img src={blog?.previewImg} alt="" className=" mb-10 w-7/12 px-12" />
-        <div
-          className=" w-7/12 h-full px-12 text-white text-justify"
-          dangerouslySetInnerHTML={{ __html: blog?.blogText }}
-        ></div>
+        {blog && (
+          <div
+            className=" w-7/12 h-full px-12 text-white text-justify"
+            dangerouslySetInnerHTML={{ __html: blog?.blogText }}
+          ></div>
+        )}
         <div id="comments" className=" w-6/12 flex flex-col">
           
           {/* comments add and display */}
@@ -106,7 +107,6 @@ const ViewBlog: React.FC = () => {
                 width={30}
               />
             ) : (
-
               <CiPaperplane
                 className=" h-10 w-10 text-white cursor-pointer hover:scale-125"
                 onClick={() => doComment()}
@@ -119,7 +119,6 @@ const ViewBlog: React.FC = () => {
               return <CommentElement commentInfo={element} key={index} />;
             })}
           </div>
-
         </div>
       </div>
     </div>

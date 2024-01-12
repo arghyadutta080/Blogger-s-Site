@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../firebase/Auth";
 import { AuthContext } from "../../context/AuthContext";
@@ -73,7 +72,7 @@ const Navbar: React.FC = () => {
           )}
         </div>
       </nav>
-      <Dialog
+      {/* <Dialog
         as="div"
         className="lg:hidden"
         open={mobileMenuOpen}
@@ -110,7 +109,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
         </Dialog.Panel>
-      </Dialog>
+      </Dialog> */}
     </header>
   );
 };
