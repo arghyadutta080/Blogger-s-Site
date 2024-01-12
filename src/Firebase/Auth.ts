@@ -38,7 +38,7 @@ const addUser = async (userInfo: userInfo) => {
 const signIn = () => {
     const provider = new GoogleAuthProvider();
 
-    return new Promise((resolve, reject) => {     
+    return new Promise((resolve) => {     
         signInWithPopup(auth, provider)                     // signInWithPopup pops up the google account auth window
             .then((result) => {
                 const user = result.user
@@ -74,7 +74,7 @@ const signIn = () => {
 
 const AuthState = () => {
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         try {
             onAuthStateChanged(auth, (user) => {        // onAuthStateChanged function returns the user info 
                 if (user) {                             // and handle the functionality after selecting the google account from auth window

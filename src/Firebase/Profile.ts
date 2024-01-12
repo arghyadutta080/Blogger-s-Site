@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { app, db, auth, userInfo } from "./Auth";
+import { db, auth } from "./Auth";
 
 
 interface updatedFields {
@@ -30,7 +30,7 @@ const getUser = () => {
 
 
 const updateUser = (updatedInfo: updatedFields | any) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
 
         const user = auth.currentUser;
 

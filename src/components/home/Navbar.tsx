@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { FaBars } from "react-icons/fa6";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../firebase/Auth";
 import { AuthContext } from "../../context/AuthContext";
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <FaBars className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end ">

@@ -28,7 +28,7 @@ const createComment = (comment: comment) => {
             resolve("success");
 
         } catch (error) {
-            console.log(error);
+            reject(error);
         }
     })
 }
@@ -53,7 +53,7 @@ const getMyComments = () => {       // query for comparing auth_user_uid(passed 
             }
 
         } catch (error) {
-            console.log(error);
+            reject(error);
         }
     })
 }
@@ -74,7 +74,7 @@ const getBlogComments = (blogId: string) => {           // query for comparing b
             resolve(blogComments);
 
         } catch (error) {
-            console.log(error);
+            reject(error);
         }
     })
 }

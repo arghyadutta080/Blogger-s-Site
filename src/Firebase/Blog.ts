@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
-import { auth, db, userInfo } from "./Auth";
+import { auth, db } from "./Auth";
 import { getUser } from "./Profile";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -32,16 +32,21 @@ const generateRandomString = (length: number) => {
 
 const createImgURL = (fileId: string, file: Blob | Uint8Array | ArrayBuffer) => {
     return new Promise(async (resolve, reject) => {
+        try {
+            const storage = getStorage();
+            const fileRef = ref(storage, fileId);
 
-        const storage = getStorage();
-        const fileRef = ref(storage, fileId);
+            await uploadBytes(fileRef, file);       // uploading img in firebase storage from the blob or file containing the img
 
-        await uploadBytes(fileRef, file);       // uploading img in firebase storage from the blob or file containing the img
+            getDownloadURL(fileRef).then((url: any) => {        // getting that image url, uploaded in cloud
+                console.log("img url ", url)
+                resolve(url)
+            })
+        } catch (error) {
+            reject(error)
+        }
 
-        getDownloadURL(fileRef).then((url: any) => {        // getting that image url, uploaded in cloud
-            console.log("img url ", url)
-            resolve(url)
-        })
+        
     })
 }
 
@@ -75,7 +80,7 @@ const createBlog = (blogInfo: blogInfo, imgFile: Blob | Uint8Array | ArrayBuffer
                 resolve(blogCreationStatus);
             }
         } catch (error) {
-            console.log(error);
+            reject(error);
         }
     })
 }
@@ -123,7 +128,7 @@ const getAllBlogs =  () => {                                    // show all blog
             resolve(allBlogs);
         
         } catch (error) {
-            console.log(error);
+            reject(error);
         }    
     })  
 }
@@ -167,7 +172,7 @@ const getMyBlogs = () => {          // get those blogs where bloggerId = auth.us
             }
 
         } catch (error) {
-            console.log(error);
+            reject(error);
         }
     })
 }
