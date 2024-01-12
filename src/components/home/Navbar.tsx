@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/logo.png";
 import { signIn } from "../../firebase/Auth";
 import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -22,7 +23,7 @@ const Navbar: React.FC = () => {
   return (
     <header
       className={`${
-        mobileMenuOpen ? "hidden" : "bg-transparent absolute z-50 w-full"
+        mobileMenuOpen ? "hidden" : "bg-transparent absolute z-30 w-full"
       }`}
     >
       <nav
@@ -30,15 +31,14 @@ const Navbar: React.FC = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a
-            href="#"
+          <Link to="/"
             className="-m-1.5 p-1.5 flex flex-row justify-between items-center"
           >
             <span className=" font-bold text-3xl pe-2 text-blue-400">
               Blogger’s World{" "}
             </span>
             <img className="h-8 w-auto rounded-full" src={logo} alt="" />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button

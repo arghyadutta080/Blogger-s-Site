@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import homepage_bg from "../../assets/home_page_bg.png";
 import logo from "../../assets/logo-removebg.png";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../firebase/Auth";
+import Modal from "react-modal";
+import google_logo from "../../assets/google-logo.png"
+
 
 const HeroSection: React.FC = () => {
   const context = useContext(AuthContext);
@@ -11,15 +14,31 @@ const HeroSection: React.FC = () => {
   const checkAuth = context.checkAuth;
   const navigate = useNavigate();
 
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
   const navigation = async () => {
     if (isAuthenticated) {
-      console.log("inside navigation")
+      // console.log("inside navigation")
       navigate(`/dashboard/posts`);
     } else {
-      await signIn();
-      await checkAuth(); // globally user is set
+      openModal();
     }
   };
+
+  const authenticate = async () => {
+    closeModal()
+    await signIn();
+    await checkAuth(); // globally user is set
+    navigate(`/dashboard/posts`);
+  }
 
   return (
     <div className="relative isolate overflow-hidden bg-gray-900 md:py-24 sm:py-32 h-screen">
@@ -54,6 +73,34 @@ const HeroSection: React.FC = () => {
           Create Blog <span aria-hidden="true"></span>
         </button>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Authentication Modal"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-800 p-4 z-50 rounded-2xl w-4/12 h-2/5"
+      >
+        <h2 className=" text-3xl font-bold text-start text-white flex flex-row justify-start items-center mt-3">
+          <span className=" font-bold text-xl pe-2 text-blue-400">
+            Blogger’s World{" "}
+          </span>
+          <img className="h-6 w-auto rounded-full" src={logo} alt="" />
+        </h2>
+        <h2 className="  flex flex-col justify-center items-center mt-10">
+          <span className="text-2xl font-bold text-center text-white">
+            Sign In to your account
+          </span>{" "}
+          <div className=" text-center text-white">
+            Not a blogger? <span className="text-blue-400">Start writing now!</span>
+          </div>
+        </h2>
+        <button className=" w-full px-5 py-2 rounded-full bg-black flex flex-row items-center justify-center mt-10 space-x-5"
+        onClick={() => authenticate()}>
+          <img src={google_logo} alt="" className=" h-8 w-8" />
+          <span className="text-white text-lg font-bold">
+            Continue with Google
+          </span>
+        </button>
+      </Modal>
     </div>
   );
 };

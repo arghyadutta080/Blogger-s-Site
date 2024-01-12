@@ -22,16 +22,16 @@ const CommentElement: React.FC<Props> = ({ commentInfo }) => {
   }, []);
 
   return (
-    <div className=" w-7/12 border-2 border-blue-900 bg-blue-900 rounded-2xl h-fit px-3 py-2 text-white flex flex-col space-y-3">
-      <div className=" flex flex-row justify-start space-x-5">
+    <div className=" w-7/12 border-2 border-blue-500 rounded-2xl h-fit px-3 py-2 text-white flex flex-col space-y-3">
+      <div className=" flex flex-row justify-start items-center space-x-2">
         <img
           src={commentInfo.comment.commenter.photoURL}
           alt=""
-          className="h-7 w-7 rounded-full"
+          className="h-6 w-6 rounded-full"
         />
-        <span>{commentInfo.comment.commenter.displayName}</span>
+        <span className=" text-lg font-semibold">{commentInfo.comment.commenter.displayName}</span>
       </div>
-      <span className="text-xl font-semibold">
+      <span className=" text-sm font-normal">
         {commentInfo.comment.commentText}
       </span>
       <span className="text-sm font-thin">{blogTitle}</span>

@@ -40,7 +40,7 @@ const getMyComments = () => {       // query for comparing auth_user_uid(passed 
             const user = auth.currentUser;
 
             if (user != null) {
-                const q = query(collection(db, "comments"), where("commenter.userId", "==", user.uid));
+                const q = query(collection(db, "comments"), where("bloggerId", "==", user.uid));
                 const querySnapshot = await getDocs(q);
 
                 var myComments: any[] = [];

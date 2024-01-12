@@ -7,13 +7,18 @@ import { FaRegComment } from "react-icons/fa";
 import { comment, createComment, getBlogComments } from "../firebase/Comment";
 import CommentElement from "../components/dashboard/comment/CommentElement";
 import { CiPaperplane } from "react-icons/ci";
+import ReactLoading from "react-loading";
+import toast from "react-hot-toast";
 
 
 const ViewBlog: React.FC = () => {
   const { blogId }: any = useParams();
+
   const [blog, setBlog] = useState<Blog>();
   const [comments, setComments] = useState<Comment[]>([]);
   const [myComment, setMyComment] = useState<string>("");
+
+  const [onLoading, setOnLoading] = useState<boolean>(false);
 
   const blogData = async (blogId: string) => {
     const fetchData: any = await getBlog(blogId);
@@ -27,18 +32,26 @@ const ViewBlog: React.FC = () => {
   };
 
   const doComment = async () => {
-    const commentInfo: comment = {
-      commentText: myComment,
-      blogId
+    if (myComment !== "") {  
+      setOnLoading(true);
+      const commentInfo: comment = {
+        commentText: myComment,
+        blogId,
+      };
+      setMyComment("");
+      await createComment(commentInfo);
+      showComments(blogId);
+      setOnLoading(false);
+    } else {
+      toast.error("Cann't submit empty comment");
     }
-    await createComment(commentInfo);
-    showComments(blogId);
-  }
+  };
 
   useEffect(() => {
     blogData(blogId);
     showComments(blogId);
   }, []);
+
 
   return (
     <div>
@@ -85,13 +98,28 @@ const ViewBlog: React.FC = () => {
               value={myComment}
               onChange={(event) => setMyComment(event.target.value)}
             />
-            <CiPaperplane className=" h-10 w-10 text-white" onClick={() => doComment()}/>
+            {onLoading ? (
+              <ReactLoading
+                type={"spin"}
+                color={"white"}
+                height={30}
+                width={30}
+              />
+            ) : (
+
+              <CiPaperplane
+                className=" h-10 w-10 text-white cursor-pointer hover:scale-125"
+                onClick={() => doComment()}
+              />
+            )}
           </div>
+
           <div className="space-y-3">
             {comments.map((element, index) => {
               return <CommentElement commentInfo={element} key={index} />;
             })}
           </div>
+
         </div>
       </div>
     </div>

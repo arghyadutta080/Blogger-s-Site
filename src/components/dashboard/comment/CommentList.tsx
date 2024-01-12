@@ -46,7 +46,7 @@ const CommentList: React.FC<Props> = ({comments}) => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="w-10/12 h-screen z-10 mt-16 ">
+        <div className={`w-10/12 ${comments.length > 4 ? "h-full" : "h-screen"} z-10 mt-16 `}>
           {comments.length > 0 ? (
             <div className="border-t-2 h-full border-l-2 flex flex-col space-y-8 pt-8 pl-10">
               {comments.map((e, index) => {
