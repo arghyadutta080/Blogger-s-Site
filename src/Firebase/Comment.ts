@@ -1,5 +1,5 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
-import { auth, db, userInfo } from "./Auth"
+import { auth, db } from "./Auth"
 import { blogger_commenter, getBlog } from "./Blog"
 import { getUser } from "./Profile"
 
@@ -10,7 +10,7 @@ export interface comment {
 }
 
 
-const createComment = (comment: comment, user: userInfo) => {
+const createComment = (comment: comment) => {
     return new Promise(async (resolve, reject) => {
         try {
             const commenterInfo: any = await getUser()

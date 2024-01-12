@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Blog } from "./BlogList";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
 
 
 export interface props {
@@ -10,12 +9,10 @@ export interface props {
 
 
 const BlogElement: React.FC<props> = ({ blog }) => {
-  const context = useContext(AuthContext);
-  const user = context.user;
   const navigate = useNavigate();
 
   const redirectToViewBlog = () => {
-    navigate(`/${user.username}/blog/${blog.blogId}`)
+    navigate(`/${blog.blogger.username}/blog/${blog.blogId}`)
   }
 
   return (
@@ -28,10 +25,6 @@ const BlogElement: React.FC<props> = ({ blog }) => {
         />
       </div>
       <div className="flex flex-col text-white space-y-3 mt-8">
-        <div className=" flex flex-row space-x-5">
-          <span className=" text-sm font-thin">Mar 16, 2020</span>
-          <span className="text-sm font-normal"> Marketing</span>
-        </div>
         <span className=" text-2xl font-bold">{blog.blogTitle}</span>
         <div className=" flex flex-row items-center space-x-3">
           <img

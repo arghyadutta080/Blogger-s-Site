@@ -4,6 +4,7 @@ import no_blog from "../../../assets/no_blog.png";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaCircleUser } from "react-icons/fa6";
 
 
 export interface Blog {
@@ -14,7 +15,6 @@ export interface Blog {
   blogger: {
     displayName: string;
     photoURL: string;
-    // userId: string;
     username: string;
   };
 }
@@ -38,6 +38,7 @@ const BlogList: React.FC<Props> = ({ blogs }) => {
       toast.error("Setup your @username first!");
     }
   }, []);
+
 
   return (
     <>
@@ -66,7 +67,7 @@ const BlogList: React.FC<Props> = ({ blogs }) => {
         </div>
       ) : (
         <div className="w-10/12 h-screen z-10 mt-16 border-t-2 border-l-2 flex flex-col items-center justify-center text-3xl font-extrabold text-white">
-          <img src={no_blog} alt="" className=" h-60 w-72 pb-3" />
+          <FaCircleUser className=" h-60 w-60 pb-3" />
           <h3>Login First!</h3>
         </div>
       )}

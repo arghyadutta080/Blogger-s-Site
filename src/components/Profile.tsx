@@ -6,7 +6,8 @@ import { updateUser } from "../firebase/Profile";
 import toast from "react-hot-toast";
 import { Comment } from "./dashboard/comment/CommentList";
 import { getMyComments } from "../firebase/Comment";
-
+import { FaCircleUser } from "react-icons/fa6";
+import ReactLoading from "react-loading";
 
 const Profile: React.FC = () => {
   const context = useContext(AuthContext);
@@ -15,16 +16,19 @@ const Profile: React.FC = () => {
   const isAuthenticated = context.isAuthenticated;
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [comments, setComments] = useState<Comment[]>([])
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const [editMode, setEditMode] = useState(false);
 
   const [field, setField] = useState<string>("");
   const [username, setUsername] = useState<string>("");
 
+  const [onLoading, setOnLoading] = useState<boolean>(false);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setOnLoading(true);
 
     const userUpdateStatus = await updateUser({
       username: username,
@@ -38,14 +42,17 @@ const Profile: React.FC = () => {
       username: username,
       email: user.email,
       displayName: user.displayName,
-      authState: user.authState
-    })
+      authState: user.authState,
+    });
 
     if (userUpdateStatus) {
       toast.success("Your profile is successfully updated");
     } else {
       toast.error("Profile updation is failed!");
     }
+
+    setEditMode(false);
+    setOnLoading(false);
   };
 
   const getBlogs = async () => {
@@ -53,12 +60,11 @@ const Profile: React.FC = () => {
     setBlogs(Blogs);
   };
 
-  const getComments =async () => {
+  const getComments = async () => {
     const Comments: Comment[] | any = await getMyComments();
     setComments(Comments);
-  }
+  };
 
- 
   useEffect(() => {
     setField(user?.field);
     setUsername(user?.username);
@@ -66,7 +72,6 @@ const Profile: React.FC = () => {
     getComments();
     console.log(user);
   }, []);
-
 
   return (
     <>
@@ -77,7 +82,7 @@ const Profile: React.FC = () => {
               Your profile
             </h3>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-white">
-              Personal details and application.
+              Personal and Blogging details ...
             </p>
           </div>
           <div className="mt-10 px-10 flex flex-row justify-evenly">
@@ -183,22 +188,34 @@ const Profile: React.FC = () => {
               <div className="mt-6 flex flex-row justify-evenly">
                 <button
                   className="px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 active:border-blue-400 active:border-4"
-                  onClick={() => setEditMode(true)}
+                  onClick={() => setEditMode(!editMode)}
                 >
                   Edit
                 </button>
-                <button
-                  className="px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 active:border-blue-400 active:border-4"
-                  type="submit"
-                >
-                  Save
-                </button>
+                {onLoading ? (
+                  <div className=" px-6 py-1 border-2 border-blue-400 rounded-2xl">
+                    <ReactLoading
+                      type={"spin"}
+                      color={"#29A3FC"}
+                      height={30}
+                      width={30}
+                    />
+                  </div>
+                ) : (
+                  <button
+                    className="px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 active:border-blue-400 active:border-4"
+                    type="submit"
+                  >
+                    Save
+                  </button>
+                )}
               </div>
             </form>
           </div>
         </div>
       ) : (
-        <div className="w-10/12 h-screen z-10 mt-16 border-t-2 border-l-2 flex items-center justify-center text-3xl font-extrabold text-white">
+        <div className="w-10/12 h-screen z-10 mt-16 border-t-2 border-l-2 flex flex-col items-center justify-center text-3xl font-extrabold text-white">
+          <FaCircleUser className=" h-60 w-60 pb-3" />
           <h3>Login First!</h3>
         </div>
       )}

@@ -4,13 +4,19 @@ import { createBlog } from "../../../firebase/Blog";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import ReactLoading from "react-loading";
+import { FaCircleUser } from "react-icons/fa6";
+
 
 const NewBlog: React.FC = () => {
   const [blogTitle, setBlogTitle] = useState<string>("");
   const [htmlText, setHtmlText] = useState<string>("");
 
+  const [onLoading, setOnLoading] = useState<boolean>(false);
+
   const context = useContext(AuthContext);
   const user = context.user;
+  const isAuthenticated = context.isAuthenticated;
 
   //   sending data to blog-preview page
 
@@ -28,8 +34,7 @@ const NewBlog: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (user.username == "") {
-      // checking username is set or not
+    if (user && user.username == "") { // checking username is set or not
       navigate(`/dashboard/profile/_undefined_username_`);
       toast.error("Setup your @username first!");
     }
@@ -58,6 +63,7 @@ const NewBlog: React.FC = () => {
   };
 
   const createNewBlog = async () => {
+    setOnLoading(true);
     const blogCreationStatus = await createBlog(
       {
         blogTitle,
@@ -71,80 +77,96 @@ const NewBlog: React.FC = () => {
     } else {
       toast.error("Blog creation failed!");
     }
+    setOnLoading(false);
   };
 
-  console.log(
-    imgFile?.type == defaultBlob.type,
-    blogTitle == "",
-    htmlText == "",
-    htmlText == "<p><br></p>"
-  );
-
   return (
-    <div className="w-10/12 h-screen z-10 mt-16 ">
-      <div className="border-t-2 h-full border-l-2 flex flex-col items-center space-y-5 pt-5 pb-8">
-        <input
-          type="text"
-          placeholder="Your Blog Title"
-          className="w-8/12 text-xl px-3 py-1 rounded-md text-center"
-          value={blogTitle}
-          onChange={(event) => setBlogTitle(event.target.value)}
-        />
-        <div className="bg-white w-8/12 h-[37.6rem]">
-          <TextEditor htmlText={htmlText} setHtmlText={setHtmlText} />
-        </div>
-        <div className=" flex flex-row justify-between items-center w-8/12">
-          <div className="bg-white rounded-md">
-            <label
-              htmlFor="preview"
-              className="text-xl px-10 py-3 text-gray-500"
-            >
-              {" "}
-              Preview Image
-            </label>
+    <>
+      {isAuthenticated ? (
+        <div className="w-10/12 h-screen z-10 mt-16 ">
+          <div className="border-t-2 h-full border-l-2 flex flex-col items-center space-y-5 pt-5 pb-8">
             <input
-              type="file"
-              id="preview"
-              onChange={(event) => getImgFile(event)}
-              alt=""
-              placeholder="Submit image"
-              className=" border-blue-500 bg-white w-56 px-1 py-1 rounded-md"
+              type="text"
+              placeholder="Your Blog Title"
+              className="w-8/12 text-xl px-3 py-1 rounded-md text-center"
+              value={blogTitle}
+              onChange={(event) => setBlogTitle(event.target.value)}
             />
+            <div className="bg-white w-8/12 h-[37.6rem]">
+              <TextEditor htmlText={htmlText} setHtmlText={setHtmlText} />
+            </div>
+            <div className=" flex flex-row justify-between items-center w-8/12">
+              <div className="bg-white rounded-md">
+                <label
+                  htmlFor="preview"
+                  className="text-xl px-10 py-3 text-gray-500"
+                >
+                  {" "}
+                  Preview Image
+                </label>
+                <input
+                  type="file"
+                  id="preview"
+                  onChange={(event) => getImgFile(event)}
+                  alt=""
+                  placeholder="Submit image"
+                  className=" border-blue-500 bg-white w-56 px-1 py-1 rounded-md"
+                />
+              </div>
+              <button
+                className=" px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 active:border-blue-400 active:border-4"
+                onClick={() => previewNavigation()}
+              >
+                Preview Blog
+              </button>
+              {onLoading ? (
+                <div className=" px-12 py-1 border-2 border-blue-400 rounded-2xl">
+                  <ReactLoading
+                    type={"spin"}
+                    color={"#29A3FC"}
+                    height={30}
+                    width={30}
+                  />
+                </div>
+              ) : (
+                <button
+                  disabled={
+                    imgFile?.type == defaultBlob.type ||
+                    blogTitle == "" ||
+                    htmlText == "" ||
+                    htmlText == "<p><br></p>"
+                      ? true
+                      : false
+                  }
+                  onClick={() => createNewBlog()}
+                  className={`${
+                    imgFile?.type == defaultBlob.type ||
+                    blogTitle == "" ||
+                    htmlText == "" ||
+                    htmlText == "<p><br></p>"
+                      ? "cursor-not-allowed"
+                      : ""
+                  } px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 ${
+                    imgFile?.type != defaultBlob.type &&
+                    blogTitle != "" &&
+                    (htmlText != "" || htmlText != "<p><br></p>")
+                      ? "active:border-blue-400 active:border-4"
+                      : ""
+                  }`}
+                >
+                  Save Blog
+                </button>
+              )}
+            </div>
           </div>
-          <button
-            className=" px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 active:border-blue-400 active:border-4"
-            onClick={() => previewNavigation()}
-          >
-            Preview Blog
-          </button>
-          <button
-            disabled={
-              imgFile?.type == defaultBlob.type ||
-              blogTitle == "" ||
-              (htmlText == "" || htmlText == '<p><br></p>')
-                ? true
-                : false
-            }
-            onClick={() => createNewBlog()}
-            className={`${
-              imgFile?.type == defaultBlob.type ||
-              blogTitle == "" ||
-              (htmlText == "" || htmlText == '<p><br></p>')
-                ? "cursor-not-allowed"
-                : ""
-            } px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 ${
-              imgFile?.type != defaultBlob.type &&
-              blogTitle != "" &&
-              (htmlText != "" || htmlText != '<p><br></p>')
-                ? "active:border-blue-400 active:border-4"
-                : ""
-            }`}
-          >
-            Save Blog
-          </button>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="w-10/12 h-screen z-10 mt-16 border-t-2 border-l-2 flex flex-col items-center justify-center text-3xl font-extrabold text-white">
+          <FaCircleUser className=" h-60 w-60 pb-3" />
+          <h3>Login First!</h3>
+        </div>
+      )}
+    </>
   );
 };
 
