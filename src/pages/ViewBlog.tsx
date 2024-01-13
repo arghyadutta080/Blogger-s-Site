@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Blog } from "../components/dashboard/blog/BlogList.tsx";
-import { getBlog } from "../firebase/Blog.ts";
+import { getBlog } from "../Firebase/Blog.ts";
 import Navbar from "../components/home/Navbar.tsx";
 import { FaRegComment } from "react-icons/fa";
-import { comment, createComment, getBlogComments } from "../firebase/Comment.ts";
+import {
+  comment,
+  createComment,
+  getBlogComments,
+} from "../Firebase/Comment.ts";
 import CommentElement from "../components/dashboard/comment/CommentElement.tsx";
 import { CiPaperplane } from "react-icons/ci";
 import ReactLoading from "react-loading";
@@ -28,7 +32,7 @@ const ViewBlog: React.FC = () => {
   const showComments = async (blogId: string) => {
     const commentList: Comment[] | any = await getBlogComments(blogId);
     setComments(commentList);
-    console.log("comments", comments);
+    // console.log("comments", comments);
   };
 
   const doComment = async () => {
@@ -87,7 +91,6 @@ const ViewBlog: React.FC = () => {
           ></div>
         )}
         <div id="comments" className=" w-6/12 flex flex-col">
-          
           {/* comments add and display */}
 
           <h3 className="text-white font-semibold text-3xl mt-10 mb-3">{`Responses(${comments.length})`}</h3>

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import TextEditor from "./TextEditor.tsx";
-import { createBlog } from "../../../firebase/Blog.ts";
+import { createBlog } from "../../../Firebase/Blog.ts";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext.ts";
 import ReactLoading from "react-loading";
 import { FaCircleUser } from "react-icons/fa6";
-
 
 const NewBlog: React.FC = () => {
   const [blogTitle, setBlogTitle] = useState<string>("");
@@ -34,7 +33,8 @@ const NewBlog: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (user && user.username == "") { // checking username is set or not
+    if (user && user.username == "") {
+      // checking username is set or not
       navigate(`/dashboard/profile/_undefined_username_`);
       toast.error("Setup your @username first!");
     }
@@ -47,9 +47,9 @@ const NewBlog: React.FC = () => {
 
   const defaultBlob = new Blob(["Default Content"], { type: "text/plain" });
 
-  const [imgFile, setImageFile] = useState<Blob | Uint8Array | ArrayBuffer | any>(
-    defaultBlob
-  );
+  const [imgFile, setImageFile] = useState<
+    Blob | Uint8Array | ArrayBuffer | any
+  >(defaultBlob);
 
   const getImgFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const targetFiles = event.target.files;
@@ -149,7 +149,7 @@ const NewBlog: React.FC = () => {
                   } px-3 py-1 text-2xl text-white font-bold border-2 border-blue-400 rounded-2xl hover:border-white hover:bg-white hover:text-blue-600 ${
                     imgFile?.type != defaultBlob.type &&
                     blogTitle != "" &&
-                    (htmlText != "")
+                    htmlText != ""
                       ? "active:border-blue-400 active:border-4"
                       : ""
                   }`}

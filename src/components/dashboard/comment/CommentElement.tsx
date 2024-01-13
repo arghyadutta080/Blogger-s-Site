@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Comment } from "./CommentList.tsx";
-import { getBlog } from "../../../firebase/Blog.ts";
+import { getBlog } from "../../../Firebase/Blog.ts";
 import { Blog } from "../blog/BlogList.tsx";
-
 
 interface Props {
   commentInfo: Comment;
 }
-
 
 const CommentElement: React.FC<Props> = ({ commentInfo }) => {
   const [blogTitle, setBlogTitle] = useState<string>("");
@@ -15,7 +13,7 @@ const CommentElement: React.FC<Props> = ({ commentInfo }) => {
   const blog = async () => {
     const blogData: Blog | any = await getBlog(commentInfo.comment.blogId);
     setBlogTitle(blogData.blogTitle);
-  }; 
+  };
 
   useEffect(() => {
     blog();
@@ -29,7 +27,9 @@ const CommentElement: React.FC<Props> = ({ commentInfo }) => {
           alt=""
           className="h-6 w-6 rounded-full"
         />
-        <span className=" text-lg font-semibold">{commentInfo.comment.commenter.displayName}</span>
+        <span className=" text-lg font-semibold">
+          {commentInfo.comment.commenter.displayName}
+        </span>
       </div>
       <span className=" text-sm font-normal">
         {commentInfo.comment.commentText}

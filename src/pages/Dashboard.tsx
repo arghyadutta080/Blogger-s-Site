@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/dashboard/Sidebar.tsx";
 import BlogList, { Blog } from "../components/dashboard/blog/BlogList.tsx";
-import { getAllBlogs, getMyBlogs } from "../firebase/Blog.ts";
+import { getAllBlogs, getMyBlogs } from "../Firebase/Blog.ts";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/home/Navbar.tsx";
 import { AuthContext } from "../context/AuthContext.ts";
 import Profile from "../components/Profile.tsx";
-import CommentList, { Comment } from "../components/dashboard/comment/CommentList.tsx";
-import { getMyComments } from "../firebase/Comment.ts";
+import CommentList, {
+  Comment,
+} from "../components/dashboard/comment/CommentList.tsx";
+import { getMyComments } from "../Firebase/Comment.ts";
 import NewBlog from "../components/dashboard/blog/NewBlog.tsx";
-
 
 const Dashboard: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -22,7 +23,7 @@ const Dashboard: React.FC = () => {
   const getBlogs = async () => {
     const bloglist: any = await getAllBlogs();
     setBlogs(bloglist);
-    console.log("All blogs", blogs);
+    // console.log("All blogs", blogs);
   };
 
   const showMyBlogs = async () => {
@@ -39,7 +40,7 @@ const Dashboard: React.FC = () => {
     if (isAuthenticated) {
       const commentList: Comment[] | any = await getMyComments();
       setComments(commentList);
-      console.log("comments", comments);
+      // console.log("comments", comments);
     } else {
       setComments([]);
     }
@@ -51,7 +52,6 @@ const Dashboard: React.FC = () => {
     showMyComments();
   }, []);
 
-  
   return (
     <div className="bg-slate-800 mb-0">
       <div className=" h-full mb-0">

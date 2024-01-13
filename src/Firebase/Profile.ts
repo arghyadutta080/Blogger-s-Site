@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { db, auth } from "./Auth";
+import { db, auth } from "./Auth.ts";
 
 
 interface updatedFields {

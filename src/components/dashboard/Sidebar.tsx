@@ -4,8 +4,7 @@ import { LiaCommentDotsSolid } from "react-icons/lia";
 import { FaPlus, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext.ts";
-import { logOut } from "../../firebase/Auth.ts";
-
+import { logOut } from "../../Firebase/Auth.ts";
 
 interface Props {
   getBlogs: () => Promise<void>;
@@ -33,13 +32,12 @@ const Sidebar: React.FC<Props> = ({
   const username = isAuthenticated
     ? user?.username || "_undefined_username_"
     : "_undefined_username_";
-  
-    const logOutUser = async () => {
+
+  const logOutUser = async () => {
     const authState: any = await logOut();
     setIsAuthenticated(false);
     console.log("inside logoutUser", authState.authState);
   };
-
 
   return (
     <div className=" w-2/12 h-screen z-10 pt-16 space-y-5">

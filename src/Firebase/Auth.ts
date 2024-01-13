@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "./Config";
+import { firebaseConfig } from "./Config.ts";
 import { getFirestore, collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -52,7 +52,7 @@ const signIn = () => {
 
                     addUser(userInfo)                   // storing `userInfo` in form of a document in "users" collection
 
-                    console.log("Signed In user details ", userInfo);
+                    // console.log("Signed In user details ", userInfo);
 
                     resolve(userInfo);
 

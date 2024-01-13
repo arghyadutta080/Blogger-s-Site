@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AuthState, userInfo } from "../firebase/Auth.ts";
+import { AuthState, userInfo } from "../Firebase/Auth.ts";
 import { AuthContext } from "./AuthContext.ts";
-import { getUser } from "../firebase/Profile";
-
+import { getUser } from "../Firebase/Profile.ts";
 
 interface AuthUserStateProps {
   children: React.ReactNode;
@@ -28,11 +27,9 @@ const AuthUserState: React.FC<AuthUserStateProps> = (props) => {
     }
   };
 
-
   useEffect(() => {
     checkAuth();
   }, []);
-
 
   return (
     <AuthContext.Provider

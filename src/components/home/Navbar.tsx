@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import logo from "../../assets/logo.png";
-import { signIn } from "../../firebase/Auth.ts";
+import { signIn } from "../../Firebase/Auth.ts";
 import { AuthContext } from "../../context/AuthContext.ts";
 import { Link } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const Navbar: React.FC = () => {
 
   const signInUser = async () => {
     await signIn();
-    await checkAuth();  // globally user is set
-    console.log("Inside signInUser ", user);
+    await checkAuth(); // globally user is set
+    // console.log("Inside signInUser ", user);
   };
 
   return (
@@ -30,7 +30,8 @@ const Navbar: React.FC = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link to="/"
+          <Link
+            to="/"
             className="-m-1.5 p-1.5 flex flex-row justify-between items-center"
           >
             <span className=" font-bold text-3xl pe-2 text-blue-400">

@@ -3,10 +3,9 @@ import homepage_bg from "../../assets/home_page_bg.png";
 import logo from "../../assets/logo-removebg.png";
 import { AuthContext } from "../../context/AuthContext.ts";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../../firebase/Auth.ts";
+import { signIn } from "../../Firebase/Auth.ts";
 import Modal from "react-modal";
-import google_logo from "../../assets/google-logo.png"
-
+import google_logo from "../../assets/google-logo.png";
 
 const HeroSection: React.FC = () => {
   const context = useContext(AuthContext);
@@ -18,11 +17,11 @@ const HeroSection: React.FC = () => {
 
   const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   const navigation = async () => {
     if (isAuthenticated) {
@@ -34,11 +33,11 @@ const HeroSection: React.FC = () => {
   };
 
   const authenticate = async () => {
-    closeModal()
+    closeModal();
     await signIn();
     await checkAuth(); // globally user is set
     navigate(`/dashboard/posts`);
-  }
+  };
 
   return (
     <div className="relative isolate overflow-hidden bg-gray-900 md:py-24 sm:py-32 h-screen">
@@ -90,11 +89,14 @@ const HeroSection: React.FC = () => {
             Sign In to your account
           </span>{" "}
           <div className=" text-center text-white">
-            Not a blogger? <span className="text-blue-400">Start writing now!</span>
+            Not a blogger?{" "}
+            <span className="text-blue-400">Start writing now!</span>
           </div>
         </h2>
-        <button className=" w-full px-5 py-2 rounded-full bg-black flex flex-row items-center justify-center mt-10 space-x-5"
-        onClick={() => authenticate()}>
+        <button
+          className=" w-full px-5 py-2 rounded-full bg-black flex flex-row items-center justify-center mt-10 space-x-5"
+          onClick={() => authenticate()}
+        >
           <img src={google_logo} alt="" className=" h-8 w-8" />
           <span className="text-white text-lg font-bold">
             Continue with Google

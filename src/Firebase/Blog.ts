@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
-import { auth, db } from "./Auth";
-import { getUser } from "./Profile";
+import { auth, db } from "./Auth.ts";
+import { getUser } from "./Profile.ts";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 
@@ -39,7 +39,7 @@ const createImgURL = (fileId: string, file: Blob | Uint8Array | ArrayBuffer) => 
             await uploadBytes(fileRef, file);       // uploading img in firebase storage from the blob or file containing the img
 
             getDownloadURL(fileRef).then((url: any) => {        // getting that image url, uploaded in cloud
-                console.log("img url ", url)
+                // console.log("img url ", url)
                 resolve(url)
             })
         } catch (error) {

@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
-import { auth, db } from "./Auth"
-import { blogger_commenter, getBlog } from "./Blog"
-import { getUser } from "./Profile"
+import { auth, db } from "./Auth.ts"
+import { blogger_commenter, getBlog } from "./Blog.ts"
+import { getUser } from "./Profile.ts"
 
 
 export interface comment {
