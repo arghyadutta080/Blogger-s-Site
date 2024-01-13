@@ -11,7 +11,7 @@ const getAllUsers = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "users"));
         querySnapshot.forEach((doc: any) => {
-            // console.log(doc.id, " => ", doc.data());
+            console.log(doc.id, " => ", doc.data());
         });
     } catch (error) {
         console.log(error)
