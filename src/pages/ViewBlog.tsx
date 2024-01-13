@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Blog } from "../components/dashboard/blog/BlogList";
-import { getBlog } from "../firebase/Blog";
-import Navbar from "../components/home/Navbar";
+import { Blog } from "../components/dashboard/blog/BlogList.tsx";
+import { getBlog } from "../firebase/Blog.ts";
+import Navbar from "../components/home/Navbar.tsx";
 import { FaRegComment } from "react-icons/fa";
-import { comment, createComment, getBlogComments } from "../firebase/Comment";
-import CommentElement from "../components/dashboard/comment/CommentElement";
+import { comment, createComment, getBlogComments } from "../firebase/Comment.ts";
+import CommentElement from "../components/dashboard/comment/CommentElement.tsx";
 import { CiPaperplane } from "react-icons/ci";
 import ReactLoading from "react-loading";
 import toast from "react-hot-toast";
-import { Comment } from "../components/dashboard/comment/CommentList";
+import { Comment } from "../components/dashboard/comment/CommentList.tsx";
 
 const ViewBlog: React.FC = () => {
   const { blogId }: any = useParams();

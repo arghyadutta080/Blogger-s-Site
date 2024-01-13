@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import BlogElement from "./BlogElement";
+import BlogElement from "./BlogElement.tsx";
 import no_blog from "../../../assets/no_blog.png";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext.ts";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FaCircleUser } from "react-icons/fa6";

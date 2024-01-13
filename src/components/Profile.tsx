@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { Blog } from "./dashboard/blog/BlogList";
-import { getMyBlogs } from "../firebase/Blog";
-import { updateUser } from "../firebase/Profile";
+import { AuthContext } from "../context/AuthContext.ts";
+import { Blog } from "./dashboard/blog/BlogList.tsx";
+import { getMyBlogs } from "../firebase/Blog.ts";
+import { updateUser } from "../firebase/Profile.ts";
 import toast from "react-hot-toast";
-import { Comment } from "./dashboard/comment/CommentList";
-import { getMyComments } from "../firebase/Comment";
+import { Comment } from "./dashboard/comment/CommentList.tsx";
+import { getMyComments } from "../firebase/Comment.ts";
 import { FaCircleUser } from "react-icons/fa6";
 import ReactLoading from "react-loading";
 

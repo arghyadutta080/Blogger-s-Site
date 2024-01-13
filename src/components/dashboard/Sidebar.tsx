@@ -3,8 +3,8 @@ import { FaRegPenToSquare, FaRegCopy } from "react-icons/fa6";
 import { LiaCommentDotsSolid } from "react-icons/lia";
 import { FaPlus, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { logOut } from "../../firebase/Auth";
+import { AuthContext } from "../../context/AuthContext.ts";
+import { logOut } from "../../firebase/Auth.ts";
 
 
 interface Props {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Blog } from "./BlogList";
+import { Blog } from "./BlogList.tsx";
 import { useNavigate } from "react-router-dom";
 
 

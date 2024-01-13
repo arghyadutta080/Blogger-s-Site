@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../components/home/Navbar";
-import HeroSection from "../components/home/HeroSection";
+import Navbar from "../components/home/Navbar.tsx";
+import HeroSection from "../components/home/HeroSection.tsx";
 
 const HomePage: React.FC = () => {
   return <div>

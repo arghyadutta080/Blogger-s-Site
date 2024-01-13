@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import AuthUserState from "./context/AuthUserState";
-import HomePage from "./pages/HomePage";
+import AuthUserState from "./context/AuthUserState.tsx";
+import HomePage from "./pages/HomePage.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard.tsx";
 import { Toaster } from "react-hot-toast";
-import BlogPreviewPage from "./pages/BlogPreviewPage";
-import ViewBlog from "./pages/ViewBlog";
+import BlogPreviewPage from "./pages/BlogPreviewPage.tsx";
+import ViewBlog from "./pages/ViewBlog.tsx";
 
 const App: React.FC = () => {
   // Blog Functions

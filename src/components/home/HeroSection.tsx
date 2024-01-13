@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import homepage_bg from "../../assets/home_page_bg.png";
 import logo from "../../assets/logo-removebg.png";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext.ts";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../../firebase/Auth";
+import { signIn } from "../../firebase/Auth.ts";
 import Modal from "react-modal";
 import google_logo from "../../assets/google-logo.png"
 

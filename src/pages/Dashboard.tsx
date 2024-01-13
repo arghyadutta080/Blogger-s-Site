@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import Sidebar from "../components/dashboard/Sidebar";
-import BlogList, { Blog } from "../components/dashboard/blog/BlogList";
-import { getAllBlogs, getMyBlogs } from "../firebase/Blog";
+import Sidebar from "../components/dashboard/Sidebar.tsx";
+import BlogList, { Blog } from "../components/dashboard/blog/BlogList.tsx";
+import { getAllBlogs, getMyBlogs } from "../firebase/Blog.ts";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "../components/home/Navbar";
-import { AuthContext } from "../context/AuthContext";
-import Profile from "../components/Profile";
-import CommentList, { Comment } from "../components/dashboard/comment/CommentList";
-import { getMyComments } from "../firebase/Comment";
-import NewBlog from "../components/dashboard/blog/NewBlog";
+import Navbar from "../components/home/Navbar.tsx";
+import { AuthContext } from "../context/AuthContext.ts";
+import Profile from "../components/Profile.tsx";
+import CommentList, { Comment } from "../components/dashboard/comment/CommentList.tsx";
+import { getMyComments } from "../firebase/Comment.ts";
+import NewBlog from "../components/dashboard/blog/NewBlog.tsx";
 
 
 const Dashboard: React.FC = () => {

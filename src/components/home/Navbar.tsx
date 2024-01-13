@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import logo from "../../assets/logo.png";
-import { signIn } from "../../firebase/Auth";
-import { AuthContext } from "../../context/AuthContext";
+import { signIn } from "../../firebase/Auth.ts";
+import { AuthContext } from "../../context/AuthContext.ts";
 import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {

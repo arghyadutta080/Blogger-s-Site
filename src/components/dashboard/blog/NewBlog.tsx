@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import TextEditor from "./TextEditor";
-import { createBlog } from "../../../firebase/Blog";
+import TextEditor from "./TextEditor.tsx";
+import { createBlog } from "../../../firebase/Blog.ts";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext.ts";
 import ReactLoading from "react-loading";
 import { FaCircleUser } from "react-icons/fa6";
 

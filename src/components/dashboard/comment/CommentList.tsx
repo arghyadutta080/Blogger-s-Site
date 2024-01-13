@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import CommentElement from "./CommentElement";
+import CommentElement from "./CommentElement.tsx";
 import no_comment from "../../../assets/no_comment.png"
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext.ts";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FaCircleUser } from "react-icons/fa6";

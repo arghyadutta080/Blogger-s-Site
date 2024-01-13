@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Comment } from "./CommentList";
-import { getBlog } from "../../../firebase/Blog";
-import { Blog } from "../blog/BlogList";
+import { Comment } from "./CommentList.tsx";
+import { getBlog } from "../../../firebase/Blog.ts";
+import { Blog } from "../blog/BlogList.tsx";
 
 
 interface Props {

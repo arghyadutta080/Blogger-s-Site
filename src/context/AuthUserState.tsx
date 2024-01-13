@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AuthState, userInfo } from "../firebase/Auth";
-import { AuthContext } from "./AuthContext";
+import { AuthState, userInfo } from "../firebase/Auth.ts";
+import { AuthContext } from "./AuthContext.ts";
 import { getUser } from "../firebase/Profile";
 
 
