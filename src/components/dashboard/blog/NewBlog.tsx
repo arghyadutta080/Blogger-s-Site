@@ -80,6 +80,7 @@ const NewBlog: React.FC = () => {
     setOnLoading(false);
   };
 
+  
   return (
     <>
       {isAuthenticated ? (
