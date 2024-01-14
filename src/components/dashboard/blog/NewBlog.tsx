@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-// import TextEditor from "./TextEditor.tsx";
+import TextEditor from "./TextEditor.tsx";
 import { createBlog } from "../../../Firebase/Blog.ts";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -93,7 +93,7 @@ const NewBlog: React.FC = () => {
               onChange={(event) => setBlogTitle(event.target.value)}
             />
             <div className="bg-white w-8/12 h-[37.6rem]">
-              {/* <TextEditor htmlText={htmlText} setHtmlText={setHtmlText} /> */}
+              <TextEditor htmlText={htmlText} setHtmlText={setHtmlText} />
             </div>
             <div className=" flex flex-row justify-between items-center w-8/12">
               <div className="bg-white rounded-md">

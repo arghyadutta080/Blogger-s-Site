@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../components/dashboard/Sidebar.tsx";
 import BlogList, { Blog } from "../components/dashboard/blog/BlogList.tsx";
-import { getAllBlogs, getMyBlogs,} from "../Firebase/Blog.ts";
+import { getAllBlogs, getMyBlogs } from "../Firebase/Blog.ts";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/home/Navbar.tsx";
 import { AuthContext } from "../context/AuthContext.ts";
@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
     } else {
       setMyBlogs([]);
     }
-    // console.log("My blogs", blogs);
+    console.log("My blogs", blogs);
   };
 
   const showMyComments = async () => {

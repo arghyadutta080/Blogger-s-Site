@@ -25,7 +25,3 @@ dist-ssr
 
 .env
 .vercel
-
-.firebase
-.github
-.firebaserc
