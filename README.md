@@ -38,19 +38,21 @@ To run this project locally, follow these steps:
     npm install
     ```
 
-3. **Create a `.env` file at the root with the following content:**
+3. **Create a new Firebase Project with [Firebase Console](https://console.firebase.google.com) and collect Project Configuration.**
+
+4. **Create a `.env` file at the root with the following content:**
 
     ```env
-    VITE_API_KEY=AIzaSyAFwVt721AV588oDAbDQnarqpgE-jNvu48
-    VITE_AUTH_DOMAIN=blogging-app-3c0ca.firebaseapp.com
-    VITE_PROJECT_ID=blogging-app-3c0ca
-    VITE_STORAGE_BUCKET=blogging-app-3c0ca.appspot.com
-    VITE_MESSAGING_SENDER_ID=1038170698778
-    VITE_APP_ID=1:1038170698778:web:53ab42aec1c33c5d744da3
-    VITE_MEASUREMENT_ID=G-8M8BR5PVMN
+    VITE_API_KEY=your-api-key
+    VITE_AUTH_DOMAIN=your-auth-domain
+    VITE_PROJECT_ID=your-project-id
+    VITE_STORAGE_BUCKET=your-storage-bucket
+    VITE_MESSAGING_SENDER_ID=your-messaging-sender-id
+    VITE_APP_ID=your-app-id
+    VITE_MEASUREMENT_ID=your-measurement-id
     ```
 
-4. **Run the app:**
+5. **Run the app:**
 
     ```bash
     npm run dev
