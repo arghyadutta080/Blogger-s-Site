@@ -116,6 +116,7 @@ const Profile: React.FC = () => {
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      className="px-2 py-1 rounded-sm bg-slate-700 text-white"
                       required
                     />
                   ) : (
@@ -148,6 +149,7 @@ const Profile: React.FC = () => {
                       type="text"
                       value={field}
                       onChange={(e) => setField(e.target.value)}
+                      className="px-2 py-1 rounded-sm bg-slate-700 text-white"
                       required
                     />
                   ) : (

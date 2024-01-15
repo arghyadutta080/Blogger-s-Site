@@ -25,7 +25,7 @@ const BlogElement: React.FC<props> = ({ blog }) => {
         />
       </div>
       <div className="flex flex-col text-white space-y-3 mt-8">
-        <span className=" text-2xl font-bold">{blog.blogTitle}</span>
+        <span className=" text-2xl font-bold w-96">{blog.blogTitle.length > 52 ? blog.blogTitle.substring(0, 52) + " ..." : blog.blogTitle }</span>
         <div className=" flex flex-row items-center space-x-3">
           <img
             src={blog.blogger.photoURL}

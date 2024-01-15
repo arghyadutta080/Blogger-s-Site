@@ -45,7 +45,7 @@ const BlogList: React.FC<Props> = ({ blogs }) => {
       {isAuthenticated ? (
         <div
           className={`w-10/12 ${
-            blogs.length > 2 ? "h-full" : "h-screen"
+            blogs.length > 3 ? "h-full" : "h-screen"
           }  z-10 pt-16 mb-0`}
         >
           {blogs.length > 0 ? (
